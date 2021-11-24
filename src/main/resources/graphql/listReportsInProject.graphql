@@ -1,0 +1,15 @@
+query ($project_id: ID!) {
+    node(id: $project_id) {
+        ... on Project {
+            reports {
+                edges {
+                    node {
+                        id
+                        name
+                        __typename
+                    }
+                }
+            }
+        }
+    }
+}

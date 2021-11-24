@@ -1,0 +1,18 @@
+query ($report_id: ID!) {
+    node(id: $report_id) {
+        ... on ReportDone {
+            certificates {
+                edges {
+                    node {
+                        id
+                        serialNumber
+                        subject
+                        issuer
+                        fingerprint
+                        encoded
+                    }
+                }
+            }
+        }
+    }
+}

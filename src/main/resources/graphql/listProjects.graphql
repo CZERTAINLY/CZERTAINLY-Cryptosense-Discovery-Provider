@@ -1,0 +1,15 @@
+query {
+    viewer {
+        organization {
+            projects {
+                edges {
+                    node {
+                        id
+                        name
+                        api
+                    }
+                }
+            }
+        }
+    }
+}
