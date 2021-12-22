@@ -29,10 +29,13 @@ public class Certificate extends Audited implements Serializable, DtoMapper<Disc
 
 	@Id
 	@Column(name= "id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ip_discovery_certificate_seq")
-	@SequenceGenerator(name = "ip_discovery_certificate_seq", sequenceName = "ip_discovery_certificate_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cryptosense_discovery_certificate_seq")
+	@SequenceGenerator(name = "cryptosense_discovery_certificate_seq", sequenceName = "cryptosense_discovery_certificate_id_seq", allocationSize = 1)
 	private Long id;
-	
+
+	@Column(name="uuid")
+	private String uuid;
+
 	@Column(name="base64Content")
 	private String base64Content;
 	
@@ -48,7 +51,7 @@ public class Certificate extends Audited implements Serializable, DtoMapper<Disc
 	@Override
 	public DiscoveryProviderCertificateDataDto mapToDto() {
 		DiscoveryProviderCertificateDataDto dto = new DiscoveryProviderCertificateDataDto();
-		dto.setId(id);
+		dto.setUuid(uuid);
 		dto.setBase64Content(base64Content);
 		dto.setDiscoverySource(discoverySource);
 		dto.setMeta(MetaDefinitions.deserialize(meta));
@@ -68,6 +71,14 @@ public class Certificate extends Audited implements Serializable, DtoMapper<Disc
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 	public String getBase64Content() {

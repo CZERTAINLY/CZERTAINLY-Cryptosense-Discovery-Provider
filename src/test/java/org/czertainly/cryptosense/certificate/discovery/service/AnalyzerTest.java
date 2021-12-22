@@ -36,7 +36,6 @@ public class AnalyzerTest {
         WireMock.configureFor("localhost", mockServer.port());
 
         credDto = new CredentialDto();
-        credDto.setId(40L);
         credDto.setUuid("57fd083e-92c5-411c-964c-5b4e7fe35205");
         credDto.setName("test");
         credDto.setEnabled(true);
