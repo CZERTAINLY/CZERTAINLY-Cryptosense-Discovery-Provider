@@ -44,7 +44,7 @@ public class DiscoveryHistoryServiceImpl implements DiscoveryHistoryService {
 
 	@Override
 	public DiscoveryHistory getHistoryByUuid(String uuid) throws NotFoundException {
-		logger.info("Finding the Discovery history record for uuid {}", uuid);
+		logger.info("Finding the Discovery history record for UUID {}", uuid);
 		return discoveryHistoryRepository.findByUuid(uuid).orElseThrow(() -> new NotFoundException(DiscoveryHistoryServiceImpl.class, uuid));
 	}
 	
