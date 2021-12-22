@@ -7,5 +7,6 @@ import org.czertainly.cryptosense.certificate.discovery.dao.DiscoveryHistory;
 public interface DiscoveryHistoryService {
 	public DiscoveryHistory addHistory(DiscoveryProviderDto request);
 	public DiscoveryHistory getHistoryById(Long id) throws NotFoundException;
+	public DiscoveryHistory getHistoryByUuid(String uuid) throws NotFoundException;
 	public void setHistory(DiscoveryHistory history);
 }

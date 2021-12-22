@@ -27,9 +27,12 @@ public class DiscoveryHistory extends Audited implements Serializable {
 
 	@Id
 	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ip_discovery_seq")
-	@SequenceGenerator(name = "ip_discovery_seq", sequenceName = "ip_discovery_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cryptosense_discovery_seq")
+	@SequenceGenerator(name = "cryptosense_discovery_seq", sequenceName = "cryptosense_discovery_id_seq", allocationSize = 1)
 	private Long id;
+
+	@Column(name="uuid")
+	private String uuid;
 
 	@Column(name = "name")
 	private String name;
@@ -53,6 +56,14 @@ public class DiscoveryHistory extends Audited implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 	public String getName() {

@@ -53,7 +53,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 	@Override
 	public DiscoveryProviderDto getProviderDtoData(DiscoveryProviderDto request, DiscoveryHistory history) {
 		DiscoveryProviderDto dto = new DiscoveryProviderDto();
-		dto.setId(history.getId());
+		dto.setUuid(history.getUuid());
 		dto.setName(history.getName());
 		dto.setStatus(history.getStatus());
 		dto.setMeta(MetaDefinitions.deserialize(history.getMeta()));
@@ -222,9 +222,9 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 			meta.put("analyzerReportName", analyzerReport.getName());
 			meta.put("analyzerReportId", reportId);
 			meta.put("analyzerCertificateId", certificateId);
-
+			meta.put("discoverySource","Analyzer");
+			cert.setUuid(UUID.randomUUID().toString());
 			cert.setDiscoveryId(discoveryId);
-			cert.setDiscoverySource("Analyzer");
 			cert.setBase64Content(analyzerCertificate.getEncoded());
 			cert.setMeta(MetaDefinitions.serialize(meta));
 
