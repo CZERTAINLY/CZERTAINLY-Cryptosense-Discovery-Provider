@@ -222,9 +222,9 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 			meta.put("analyzerReportName", analyzerReport.getName());
 			meta.put("analyzerReportId", reportId);
 			meta.put("analyzerCertificateId", certificateId);
+			meta.put("discoverySource","Analyzer");
 			cert.setUuid(UUID.randomUUID().toString());
 			cert.setDiscoveryId(discoveryId);
-			cert.setDiscoverySource("Analyzer");
 			cert.setBase64Content(analyzerCertificate.getEncoded());
 			cert.setMeta(MetaDefinitions.serialize(meta));
 

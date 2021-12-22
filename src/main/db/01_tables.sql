@@ -5,7 +5,6 @@ CREATE TABLE "cryptosense_discovery_certificate" (
 	"id" BIGINT NOT NULL,
 	"uuid" VARCHAR NOT NULL DEFAULT NULL,
 	"base64content" VARCHAR NULL DEFAULT NULL,
-	"discovery_source" VARCHAR NULL DEFAULT NULL,
 	"discovery_id" BIGINT NULL DEFAULT NULL,
 	"i_author" VARCHAR NULL DEFAULT NULL,
 	"i_cre" DATE NULL DEFAULT NULL,
