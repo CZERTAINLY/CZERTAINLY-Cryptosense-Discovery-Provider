@@ -1,11 +1,9 @@
 package org.czertainly.cryptosense.certificate.discovery.service.impl;
 
-import java.io.Serializable;
 import java.util.*;
 
 import com.czertainly.api.model.*;
 import com.czertainly.core.util.AttributeDefinitionUtils;
-import org.czertainly.cryptosense.certificate.discovery.dto.AnalyzerRequestDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -16,16 +14,14 @@ import org.czertainly.cryptosense.certificate.discovery.service.AttributeService
 public class AttributeServiceImpl implements AttributeService {
     private static final Logger logger = LoggerFactory.getLogger(AttributeServiceImpl.class);
 
-    public static final String ATTRIBUTE_DISCOVERY_TYPE = "discoveryType";
     public static final String ATTRIBUTE_API_URL = "apiUrl";
-    public static final String ATTRIBUTE_CREDENTIAL_TYPE = "credentialType";
+    public static final String ATTRIBUTE_CREDENTIAL_KIND = "credentialKind";
     public static final String ATTRIBUTE_CREDENTIAL = "apiKey";
     public static final String ATTRIBUTE_PROJECT = "project";
     public static final String ATTRIBUTE_REPORT = "report";
 
-    public static final String ATTRIBUTE_DISCOVERY_TYPE_LABEL = "Discovery Type";
     public static final String ATTRIBUTE_API_URL_LABEL = "Analyzer API URL";
-    public static final String ATTRIBUTE_CREDENTIAL_TYPE_LABEL = "Credential Type";
+    public static final String ATTRIBUTE_CREDENTIAL_KIND_LABEL = "Credential Kind";
     public static final String ATTRIBUTE_CREDENTIAL_LABEL = "API Key";
     public static final String ATTRIBUTE_PROJECT_LABEL = "Project";
     public static final String ATTRIBUTE_REPORT_LABEL = "Report";
@@ -37,15 +33,11 @@ public class AttributeServiceImpl implements AttributeService {
         List<AttributeDefinition> attributes = new ArrayList<>();
 
         /**
-         * DISCOVERY TYPE
-         */
-        //attributes.add(getDiscoveryTypeAttribute());
-        /**
          * ANALYZER API URL
          */
         attributes.add(getAnalyzerApiUrlAttribute());
         /**
-         * CREDENTIAL TYPE
+         * CREDENTIAL KIND
          */
         attributes.add(getAnalyzerApiKeyAttribute());
         /**
@@ -71,20 +63,6 @@ public class AttributeServiceImpl implements AttributeService {
         return true;
     }
 
-    private AttributeDefinition getDiscoveryTypeAttribute() {
-        AttributeDefinition discoveryType = new AttributeDefinition();
-        discoveryType.setId("72f1ce7d-3e63-458c-8954-2e950240ca33");
-        discoveryType.setName(ATTRIBUTE_DISCOVERY_TYPE);
-        discoveryType.setLabel(ATTRIBUTE_DISCOVERY_TYPE_LABEL);
-        discoveryType.setType(BaseAttributeDefinitionTypes.STRING);
-        discoveryType.setRequired(false);
-        discoveryType.setReadOnly(true);
-        discoveryType.setVisible(true);
-        discoveryType.setValue("Cryptosense");
-        discoveryType.setDescription("Discovery Type");
-        return discoveryType;
-    }
-
     private AttributeDefinition getAnalyzerApiUrlAttribute() {
         AttributeDefinition apiUrl = new AttributeDefinition();
         apiUrl.setId("1b6c48ad-c1c7-4c82-91ef-3e61bc9f52ac");
@@ -101,17 +79,17 @@ public class AttributeServiceImpl implements AttributeService {
     }
 
     private AttributeDefinition getAnalyzerApiKeyAttribute() {
-        AttributeDefinition credentialType = new AttributeDefinition();
-        credentialType.setId("9379ca2c-aa51-42c8-8afd-2e2d16c99c56");
-        credentialType.setName(ATTRIBUTE_CREDENTIAL_TYPE);
-        credentialType.setLabel(ATTRIBUTE_CREDENTIAL_TYPE_LABEL);
-        credentialType.setDescription("API Key to authorize communication with the Analyzer");
-        credentialType.setType(BaseAttributeDefinitionTypes.STRING);
-        credentialType.setRequired(false);
-        credentialType.setReadOnly(true);
-        credentialType.setVisible(false);
-        credentialType.setValue("ApiKey");
-        return credentialType;
+        AttributeDefinition credentialKind = new AttributeDefinition();
+        credentialKind.setId("9379ca2c-aa51-42c8-8afd-2e2d16c99c56");
+        credentialKind.setName(ATTRIBUTE_CREDENTIAL_KIND);
+        credentialKind.setLabel(ATTRIBUTE_CREDENTIAL_KIND_LABEL);
+        credentialKind.setDescription("API Key to authorize communication with the Analyzer");
+        credentialKind.setType(BaseAttributeDefinitionTypes.STRING);
+        credentialKind.setRequired(false);
+        credentialKind.setReadOnly(true);
+        credentialKind.setVisible(false);
+        credentialKind.setValue("ApiKey");
+        return credentialKind;
     }
 
     private AttributeDefinition getAnalyzerApiKeyCredentialAttribute() {
