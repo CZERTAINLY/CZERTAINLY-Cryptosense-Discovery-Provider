@@ -26,12 +26,12 @@ public class AttributeServiceTest {
         apiUrl.setValue("https://analyzer.cryptosense.com/api/v2");
         apiUrl.setName("apiUrl");
 
-        AttributeDefinition credentialType = new AttributeDefinition();
+        AttributeDefinition credentialKind = new AttributeDefinition();
         apiUrl.setId("9379ca2c-aa51-42c8-8afd-2a2d16c99c56");
         apiUrl.setValue(null);
-        apiUrl.setName("credentialType");
+        apiUrl.setName("credentialKind");
 
-        attributes = Arrays.asList(apiUrl, credentialType);
+        attributes = Arrays.asList(apiUrl, credentialKind);
     }
 
     @Test
