@@ -42,7 +42,7 @@ public class AnalyzerTest {
         credDto.setConnectorName("Test Connector");
 
         AttributeDefinition apiKey = new AttributeDefinition();
-        apiKey.setId("aac5c2d5-5dc3-4ddb-9dfa-3d76b99135f8");
+        apiKey.setUuid("aac5c2d5-5dc3-4ddb-9dfa-3d76b99135f8");
         apiKey.setName("apiKey");
         apiKey.setValue("asdfEDssdfhcHJSHxhFxf");
         credDto.setAttributes(Arrays.asList(apiKey));

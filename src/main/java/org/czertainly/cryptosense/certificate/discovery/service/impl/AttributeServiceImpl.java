@@ -65,7 +65,7 @@ public class AttributeServiceImpl implements AttributeService {
 
     private AttributeDefinition getAnalyzerApiUrlAttribute() {
         AttributeDefinition apiUrl = new AttributeDefinition();
-        apiUrl.setId("1b6c48ad-c1c7-4c82-91ef-3e61bc9f52ac");
+        apiUrl.setUuid("1b6c48ad-c1c7-4c82-91ef-3e61bc9f52ac");
         apiUrl.setName(ATTRIBUTE_API_URL);
         apiUrl.setLabel(ATTRIBUTE_API_URL_LABEL);
         apiUrl.setType(BaseAttributeDefinitionTypes.STRING);
@@ -80,7 +80,7 @@ public class AttributeServiceImpl implements AttributeService {
 
     private AttributeDefinition getAnalyzerApiKeyAttribute() {
         AttributeDefinition credentialKind = new AttributeDefinition();
-        credentialKind.setId("9379ca2c-aa51-42c8-8afd-2e2d16c99c56");
+        credentialKind.setUuid("9379ca2c-aa51-42c8-8afd-2e2d16c99c56");
         credentialKind.setName(ATTRIBUTE_CREDENTIAL_KIND);
         credentialKind.setLabel(ATTRIBUTE_CREDENTIAL_KIND_LABEL);
         credentialKind.setDescription("API Key to authorize communication with the Analyzer");
@@ -94,7 +94,7 @@ public class AttributeServiceImpl implements AttributeService {
 
     private AttributeDefinition getAnalyzerApiKeyCredentialAttribute() {
         AttributeDefinition credentialKind = new AttributeDefinition();
-        credentialKind.setId("9379ca2c-aa51-42c8-8afd-2a2d16c99c57");
+        credentialKind.setUuid("9379ca2c-aa51-42c8-8afd-2a2d16c99c57");
         credentialKind.setName(ATTRIBUTE_CREDENTIAL);
         credentialKind.setLabel(ATTRIBUTE_CREDENTIAL_LABEL);
         credentialKind.setDescription("Credential for the communication");
@@ -120,7 +120,7 @@ public class AttributeServiceImpl implements AttributeService {
 
     private AttributeDefinition getProjectsAttribute() {
         AttributeDefinition projectsList = new AttributeDefinition();
-        projectsList.setId("131f64b8-52e4-4cb8-b7de-63ca61c35209");
+        projectsList.setUuid("131f64b8-52e4-4cb8-b7de-63ca61c35209");
         projectsList.setName(ATTRIBUTE_PROJECT);
         projectsList.setLabel(ATTRIBUTE_PROJECT_LABEL);
         projectsList.setDescription("List of available projects");
@@ -151,7 +151,7 @@ public class AttributeServiceImpl implements AttributeService {
 
     private AttributeDefinition getReportsAttribute() {
         AttributeDefinition reportsList = new AttributeDefinition();
-        reportsList.setId("131f64b8-52e4-4db8-b7de-63ca61c35209");
+        reportsList.setUuid("131f64b8-52e4-4db8-b7de-63ca61c35209");
         reportsList.setName(ATTRIBUTE_REPORT);
         reportsList.setLabel(ATTRIBUTE_REPORT_LABEL);
         reportsList.setDescription("List of available reports");

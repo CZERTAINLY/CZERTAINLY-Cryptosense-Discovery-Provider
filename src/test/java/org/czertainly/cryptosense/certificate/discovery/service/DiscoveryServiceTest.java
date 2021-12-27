@@ -33,12 +33,12 @@ public class DiscoveryServiceTest {
         discoveryProviderDtoTest.setConnectorUuid("123456");
 
         AttributeDefinition apiUrl = new AttributeDefinition();
-        apiUrl.setId("1b6c48ad-c1c7-4c82-91ef-3e61bc9f52ac");
+        apiUrl.setUuid("1b6c48ad-c1c7-4c82-91ef-3e61bc9f52ac");
         apiUrl.setValue("https://analyzer.cryptosense.com/api/v2");
         apiUrl.setName("apiUrl");
 
         AttributeDefinition credentialKind = new AttributeDefinition();
-        credentialKind.setId("9379ca2c-aa51-42c8-8afd-2a2d16c99c56");
+        credentialKind.setUuid("9379ca2c-aa51-42c8-8afd-2a2d16c99c56");
         credentialKind.setValue(null);
         credentialKind.setName("credentialKind");
         discoveryProviderDtoTest.setAttributes(Arrays.asList(apiUrl, credentialKind));
