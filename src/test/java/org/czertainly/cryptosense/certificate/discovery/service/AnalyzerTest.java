@@ -1,7 +1,7 @@
 package org.czertainly.cryptosense.certificate.discovery.service;
 
-import com.czertainly.api.model.AttributeDefinition;
-import com.czertainly.api.model.credential.CredentialDto;
+import com.czertainly.api.model.common.AttributeDefinition;
+import com.czertainly.api.model.core.credential.CredentialDto;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import org.czertainly.cryptosense.certificate.discovery.dto.AnalyzerRequestDto;
