@@ -1,8 +1,8 @@
 package org.czertainly.cryptosense.certificate.discovery.api;
 
-import com.czertainly.api.interfaces.HealthController;
-import com.czertainly.api.model.HealthDto;
-import com.czertainly.api.model.HealthStatus;
+import com.czertainly.api.interfaces.connector.HealthController;
+import com.czertainly.api.model.common.HealthDto;
+import com.czertainly.api.model.common.HealthStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

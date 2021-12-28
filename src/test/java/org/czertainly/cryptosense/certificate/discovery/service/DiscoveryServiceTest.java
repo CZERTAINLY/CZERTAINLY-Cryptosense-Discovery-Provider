@@ -1,7 +1,8 @@
 package org.czertainly.cryptosense.certificate.discovery.service;
 
-import com.czertainly.api.model.AttributeDefinition;
-import com.czertainly.api.model.discovery.DiscoveryProviderDto;
+import com.czertainly.api.model.common.RequestAttributeDto;
+import com.czertainly.api.model.connector.discovery.DiscoveryDataRequestDto;
+import com.czertainly.api.model.connector.discovery.DiscoveryRequestDto;
 import org.czertainly.cryptosense.certificate.discovery.dao.DiscoveryHistory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,21 +24,27 @@ public class DiscoveryServiceTest {
     @Autowired
     private DiscoveryService discoveryService;
 
-    private DiscoveryProviderDto discoveryProviderDtoTest;
+    private DiscoveryRequestDto discoveryProviderDtoTest;
+    private DiscoveryDataRequestDto discoveryProviderDtoTestExists;
     private DiscoveryHistory discoveryHistory;
 
     @BeforeEach
     public void setUp() {
-        discoveryProviderDtoTest = new DiscoveryProviderDto();
+        discoveryProviderDtoTest = new DiscoveryRequestDto();
         discoveryProviderDtoTest.setName("test123");
-        discoveryProviderDtoTest.setConnectorUuid("123456");
 
-        AttributeDefinition apiUrl = new AttributeDefinition();
+        discoveryProviderDtoTestExists = new DiscoveryDataRequestDto();
+        discoveryProviderDtoTestExists.setName("test123");
+        discoveryProviderDtoTestExists.setStartIndex(0);
+        discoveryProviderDtoTestExists.setEndIndex(100);
+
+
+        RequestAttributeDto apiUrl = new RequestAttributeDto();
         apiUrl.setUuid("1b6c48ad-c1c7-4c82-91ef-3e61bc9f52ac");
         apiUrl.setValue("https://analyzer.cryptosense.com/api/v2");
         apiUrl.setName("apiUrl");
 
-        AttributeDefinition credentialKind = new AttributeDefinition();
+        RequestAttributeDto credentialKind = new RequestAttributeDto();
         credentialKind.setUuid("9379ca2c-aa51-42c8-8afd-2a2d16c99c56");
         credentialKind.setValue(null);
         credentialKind.setName("credentialKind");
@@ -49,7 +56,7 @@ public class DiscoveryServiceTest {
 
     @Test
     public void getProviderDtoDataTest(){
-        Assertions.assertAll(() -> discoveryService.getProviderDtoData(discoveryProviderDtoTest, discoveryHistory));
+        Assertions.assertAll(() -> discoveryService.getProviderDtoData(discoveryProviderDtoTestExists, discoveryHistory));
     }
 
     @Test

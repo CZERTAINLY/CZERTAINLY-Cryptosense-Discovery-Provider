@@ -1,9 +1,9 @@
 package org.czertainly.cryptosense.certificate.discovery.service.impl;
 
 import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerCertificate;
+import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerProject;
 import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerReport;
 import org.czertainly.cryptosense.certificate.discovery.cryptosense.GraphqlRequestBody;
-import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerProject;
 import org.czertainly.cryptosense.certificate.discovery.dto.AnalyzerDto;
 import org.czertainly.cryptosense.certificate.discovery.dto.AnalyzerEdgesDto;
 import org.czertainly.cryptosense.certificate.discovery.dto.AnalyzerRequestDto;

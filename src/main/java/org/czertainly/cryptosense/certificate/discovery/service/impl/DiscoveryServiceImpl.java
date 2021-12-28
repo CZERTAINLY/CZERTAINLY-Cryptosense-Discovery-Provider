@@ -1,23 +1,24 @@
 package org.czertainly.cryptosense.certificate.discovery.service.impl;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
-
-import com.czertainly.api.model.AttributeDefinition;
-import com.czertainly.api.model.credential.CredentialDto;
-import com.czertainly.api.model.discovery.DiscoveryProviderDto;
-import com.czertainly.api.model.discovery.DiscoveryStatus;
+import com.czertainly.api.model.common.RequestAttributeDto;
+import com.czertainly.api.model.connector.discovery.DiscoveryDataRequestDto;
+import com.czertainly.api.model.connector.discovery.DiscoveryProviderDto;
+import com.czertainly.api.model.connector.discovery.DiscoveryRequestDto;
+import com.czertainly.api.model.core.credential.CredentialDto;
+import com.czertainly.api.model.core.discovery.DiscoveryStatus;
 import com.czertainly.core.util.AttributeDefinitionUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerCertificate;
 import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerProject;
 import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerReport;
+import org.czertainly.cryptosense.certificate.discovery.dao.Certificate;
+import org.czertainly.cryptosense.certificate.discovery.dao.DiscoveryHistory;
 import org.czertainly.cryptosense.certificate.discovery.dto.AnalyzerRequestDto;
+import org.czertainly.cryptosense.certificate.discovery.repository.CertificateRepository;
 import org.czertainly.cryptosense.certificate.discovery.service.AnalyzerService;
+import org.czertainly.cryptosense.certificate.discovery.service.DiscoveryHistoryService;
+import org.czertainly.cryptosense.certificate.discovery.service.DiscoveryService;
+import org.czertainly.cryptosense.certificate.discovery.util.MetaDefinitions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import org.czertainly.cryptosense.certificate.discovery.dao.Certificate;
-import org.czertainly.cryptosense.certificate.discovery.dao.DiscoveryHistory;
-import org.czertainly.cryptosense.certificate.discovery.repository.CertificateRepository;
-import org.czertainly.cryptosense.certificate.discovery.service.DiscoveryHistoryService;
-import org.czertainly.cryptosense.certificate.discovery.service.DiscoveryService;
-import org.czertainly.cryptosense.certificate.discovery.util.MetaDefinitions;
+import javax.transaction.Transactional;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -51,48 +51,28 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 	private DiscoveryHistoryService discoveryHistoryService;
 	
 	@Override
-	public DiscoveryProviderDto getProviderDtoData(DiscoveryProviderDto request, DiscoveryHistory history) {
+	public DiscoveryProviderDto getProviderDtoData(DiscoveryDataRequestDto request, DiscoveryHistory history) {
 		DiscoveryProviderDto dto = new DiscoveryProviderDto();
 		dto.setUuid(history.getUuid());
 		dto.setName(history.getName());
 		dto.setStatus(history.getStatus());
 		dto.setMeta(MetaDefinitions.deserialize(history.getMeta()));
-		dto.setConnectorUuid(request.getConnectorUuid());
-		dto.setAttributes(request.getAttributes());
 		int totalCertificateSize = certificateRepository.findByDiscoveryId(history.getId()).size();
 		dto.setTotalCertificatesDiscovered(totalCertificateSize);
 		if (history.getStatus() == DiscoveryStatus.IN_PROGRESS) {
 			dto.setCertificateData(new ArrayList<>());
-			dto.setPageNumber(0);
-			dto.setTotalPages(0);
 			dto.setTotalCertificatesDiscovered(0);
 		}
 		else {
-			dto.setTotalPages(totalPages(totalCertificateSize));
-			if (request.getPageNumber() == 0) {
-				Pageable page = PageRequest.of(0, 100);
-				dto.setPageNumber(1);
-				dto.setCertificateData(certificateRepository.findAllByDiscoveryId(history.getId(), page).stream().map(Certificate::mapToDto).collect(Collectors.toList()));
-			}else {
-				Pageable page = PageRequest.of(request.getPageNumber() -1, 100);
-				dto.setPageNumber(request.getPageNumber());
+				Pageable page = PageRequest.of(request.getStartIndex(), request.getEndIndex());
 				dto.setCertificateData(certificateRepository.findAllByDiscoveryId(history.getId(), page).stream().map(Certificate::mapToDto).collect(Collectors.toList()));
 			}
-		}
 		return dto;
-	}
-	
-	private Integer totalPages(int totalResults) {
-		if (totalResults % PAGE_SIZE == 0) {
-		    return totalResults / PAGE_SIZE;
-		} else {
-		    return totalResults / PAGE_SIZE + 1;
-		}
 	}
 
 	@Override
 	@Async
-	public void discoverCertificate(DiscoveryProviderDto request, DiscoveryHistory history) {
+	public void discoverCertificate(DiscoveryRequestDto request, DiscoveryHistory history) {
 		try {
 			discoverCertificateInternal(request, history);
 		} catch (Exception e) {
@@ -101,7 +81,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 		}
 	}
 
-	private void discoverCertificateInternal(DiscoveryProviderDto request, DiscoveryHistory history) throws NullPointerException {
+	private void discoverCertificateInternal(DiscoveryRequestDto request, DiscoveryHistory history) throws NullPointerException {
 		logger.info("Discovery initiated for the request with name {}", request.getName());
 
 		String apiUrl = (String) getAttributeValue(request, AttributeServiceImpl.ATTRIBUTE_API_URL);
@@ -232,9 +212,9 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 		}
 	}
 
-	private static Object getAttributeValue(DiscoveryProviderDto request, String attributeName) {
-		List<AttributeDefinition> attributes = request.getAttributes();
-		for(AttributeDefinition attribute: attributes) {
+	private static Object getAttributeValue(DiscoveryRequestDto request, String attributeName) {
+		List<RequestAttributeDto> attributes = request.getAttributes();
+		for(RequestAttributeDto attribute: attributes) {
 			if (attribute.getName().equals(attributeName)) {
 				return attribute.getValue();
 			}

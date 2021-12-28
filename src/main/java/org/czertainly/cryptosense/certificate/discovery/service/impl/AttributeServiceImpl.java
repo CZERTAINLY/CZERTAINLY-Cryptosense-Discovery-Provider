@@ -1,14 +1,16 @@
 package org.czertainly.cryptosense.certificate.discovery.service.impl;
 
-import java.util.*;
-
-import com.czertainly.api.model.*;
+import com.czertainly.api.model.common.*;
 import com.czertainly.core.util.AttributeDefinitionUtils;
+import org.czertainly.cryptosense.certificate.discovery.service.AttributeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import org.czertainly.cryptosense.certificate.discovery.service.AttributeService;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class AttributeServiceImpl implements AttributeService {
@@ -58,7 +60,7 @@ public class AttributeServiceImpl implements AttributeService {
     }
 
     @Override
-    public boolean validateAttributes(String kind, List<AttributeDefinition> attributes) {
+    public boolean validateAttributes(String kind, List<RequestAttributeDto> attributes) {
         AttributeDefinitionUtils.validateAttributes(getAttributes(kind), attributes);
         return true;
     }
