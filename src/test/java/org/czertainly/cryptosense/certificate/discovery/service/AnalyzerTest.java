@@ -1,6 +1,6 @@
 package org.czertainly.cryptosense.certificate.discovery.service;
 
-import com.czertainly.api.model.common.AttributeDefinition;
+import com.czertainly.api.model.common.ResponseAttributeDto;
 import com.czertainly.api.model.core.credential.CredentialDto;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
@@ -41,7 +41,7 @@ public class AnalyzerTest {
         credDto.setEnabled(true);
         credDto.setConnectorName("Test Connector");
 
-        AttributeDefinition apiKey = new AttributeDefinition();
+        ResponseAttributeDto apiKey = new ResponseAttributeDto();
         apiKey.setUuid("aac5c2d5-5dc3-4ddb-9dfa-3d76b99135f8");
         apiKey.setName("apiKey");
         apiKey.setValue("asdfEDssdfhcHJSHxhFxf");

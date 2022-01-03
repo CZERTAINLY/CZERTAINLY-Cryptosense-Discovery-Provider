@@ -1,5 +1,6 @@
 package org.czertainly.cryptosense.certificate.discovery.service.impl;
 
+import com.czertainly.core.util.AttributeDefinitionUtils;
 import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerCertificate;
 import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerProject;
 import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerReport;
@@ -8,7 +9,6 @@ import org.czertainly.cryptosense.certificate.discovery.dto.AnalyzerDto;
 import org.czertainly.cryptosense.certificate.discovery.dto.AnalyzerEdgesDto;
 import org.czertainly.cryptosense.certificate.discovery.dto.AnalyzerRequestDto;
 import org.czertainly.cryptosense.certificate.discovery.service.AnalyzerService;
-import org.czertainly.cryptosense.certificate.discovery.util.AttributeDefinitionUtils;
 import org.czertainly.cryptosense.certificate.discovery.util.GraphqlSchemaReaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
