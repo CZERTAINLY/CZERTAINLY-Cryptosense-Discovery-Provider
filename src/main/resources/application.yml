@@ -7,3 +7,10 @@ spring:
     password: ${JDBC_PASSWORD}
     url: ${JDBC_URL}
     username: ${JDBC_USERNAME}
+  flyway:
+    out-of-order: true
+    table: "cryptosense_schema_history"
+    schemas: ${DB_SCHEMA:cryptosense}
+  jpa:
+    properties:
+      hibernate.default_schema: ${DB_SCHEMA:cryptosense}
