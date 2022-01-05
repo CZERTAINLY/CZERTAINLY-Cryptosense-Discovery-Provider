@@ -1,6 +1,6 @@
 package org.czertainly.cryptosense.certificate.discovery.dto;
 
-import com.czertainly.api.model.credential.CredentialDto;
+import com.czertainly.api.model.core.credential.CredentialDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
