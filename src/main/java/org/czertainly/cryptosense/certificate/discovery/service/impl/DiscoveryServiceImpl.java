@@ -83,7 +83,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 
 	private void discoverCertificateInternal(DiscoveryRequestDto request, DiscoveryHistory history) throws NullPointerException {
 		logger.info("Discovery initiated for the request with name {}", request.getName());
-
+		Map<String, Object> meta = new LinkedHashMap<>();
 		String apiUrl = (String) getAttributeValue(request, AttributeServiceImpl.ATTRIBUTE_API_URL);
 		CredentialDto apiKeyCredential = AttributeDefinitionUtils.getCredentialValue("apiKey", request.getAttributes());
 		final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
@@ -105,7 +105,17 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 					for (AnalyzerReport analyzerReport : listOfReports) {
 						if (!analyzerReport.getName().equals("ALL")) {
 							logger.info("Going to search in project {} and report {}", analyzerProject.getId(), analyzerReport.getId());
-							List<AnalyzerCertificate> listOfCertificates = analyzerService.listCertificates(analyzerRequestDto, analyzerReport.getId());
+							List<AnalyzerCertificate> listOfCertificates;
+							try {
+								listOfCertificates = analyzerService.listCertificates(analyzerRequestDto, analyzerReport.getId());
+							}catch (Exception e){
+								logger.error("Failed to discover Certificates: ", e.getMessage());
+								history.setStatus(DiscoveryStatus.FAILED);
+								meta.put("reason", e.getMessage());
+								history.setMeta(MetaDefinitions.serialize(meta));
+								discoveryHistoryService.setHistory(history);
+								return;
+							}
 							listOfAllCertificates.addAll(listOfCertificates);
 							if (listOfCertificates != null && listOfCertificates.size() > 0) {
 								for (AnalyzerCertificate analyzerCertificate : listOfCertificates) {
@@ -130,7 +140,17 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 			for (AnalyzerReport analyzerReport : listOfReports) {
 				if (!analyzerReport.getName().equals("ALL")) {
 					logger.info("Going to search in project {} and report {}", selectedProject.getId(), analyzerReport.getId());
-					List<AnalyzerCertificate> listOfCertificates = analyzerService.listCertificates(analyzerRequestDto, analyzerReport.getId());
+					List<AnalyzerCertificate> listOfCertificates;
+					try {
+						listOfCertificates = analyzerService.listCertificates(analyzerRequestDto, analyzerReport.getId());
+					}catch (Exception e) {
+						logger.error("Failed to discover Certificates: ", e.getMessage());
+						history.setStatus(DiscoveryStatus.FAILED);
+						meta.put("reason", e.getMessage());
+						history.setMeta(MetaDefinitions.serialize(meta));
+						discoveryHistoryService.setHistory(history);
+						return;
+					}
 					listOfAllCertificates.addAll(listOfCertificates);
 					if (listOfCertificates != null && listOfCertificates.size() > 0) {
 						for (AnalyzerCertificate analyzerCertificate : listOfCertificates) {
@@ -147,7 +167,17 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 			}
 		} else { // there is a particular project and report to search for certificates
 			logger.info("Going to search in project {} and report {}", selectedProject.getId(), selectedReport.getId());
-			List<AnalyzerCertificate> listOfCertificates = analyzerService.listCertificates(analyzerRequestDto, selectedReport.getId());
+			List<AnalyzerCertificate> listOfCertificates;
+			try {
+				listOfCertificates = analyzerService.listCertificates(analyzerRequestDto, selectedReport.getId());
+			}catch (Exception e) {
+				logger.error("Failed to discover Certificates: ", e.getMessage());
+				history.setStatus(DiscoveryStatus.FAILED);
+				meta.put("reason", e.getMessage());
+				history.setMeta(MetaDefinitions.serialize(meta));
+				discoveryHistoryService.setHistory(history);
+				return;
+			}
 			listOfAllCertificates.addAll(listOfCertificates);
 			if (listOfCertificates != null && listOfCertificates.size() > 0) {
 				for (AnalyzerCertificate analyzerCertificate : listOfCertificates) {
@@ -162,8 +192,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 
 		logger.info("Discovery {} has total of {} certificates", request.getName(), listOfAllCertificates == null ? 0 : listOfAllCertificates.size() );
 		history.setStatus(DiscoveryStatus.COMPLETED);
-		
-		Map<String, Object> meta = new LinkedHashMap<>();
+
 		meta.put("totalCertificates", listOfAllCertificates == null ? 0 : listOfAllCertificates.size());
 		meta.put("incompleteCertificates", listOfIncompleteCertificates.size());
 
