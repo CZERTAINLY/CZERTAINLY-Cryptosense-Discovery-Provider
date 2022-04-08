@@ -25,6 +25,9 @@ public class AnalyzerServiceImpl implements AnalyzerService {
 
     private static final Logger logger = LoggerFactory.getLogger(AnalyzerServiceImpl.class);
 
+    //Value for maximum response byte size for webclient. The value is set to 100 MB to handle the response even if Cryptosense sends a larger volume than expected
+    private static final Integer MAX_BYTE_COUNT = 100 * 1024 * 1024;
+
     @Override
     public List<AnalyzerProject> getAvailableProjects(AnalyzerRequestDto request) {
 
@@ -149,7 +152,9 @@ public class AnalyzerServiceImpl implements AnalyzerService {
 
     @Override
     public List<AnalyzerCertificate> listCertificates(AnalyzerRequestDto request, String reportId) {
-        WebClient webClient = WebClient.builder().build();
+        WebClient webClient = WebClient.builder().codecs(configurer -> configurer
+                        .defaultCodecs()
+                        .maxInMemorySize(MAX_BYTE_COUNT)).build();
         GraphqlRequestBody graphQLRequestBody = new GraphqlRequestBody();
 
         String query = null;
