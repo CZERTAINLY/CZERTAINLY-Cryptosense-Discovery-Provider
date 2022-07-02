@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 /**
- * @author Pradeep Saminathan
  * Controller class for all certificate discovery operations.
  * The certificate discovery including all the methods
  */
@@ -27,9 +26,15 @@ public class DiscoveryControllerImpl implements DiscoveryController {
     private static final Logger logger = LoggerFactory.getLogger(DiscoveryControllerImpl.class);
 
     @Autowired
-    private DiscoveryService discoveryService;
-
+    public void setDiscoveryService(DiscoveryService discoveryService) {
+        this.discoveryService = discoveryService;
+    }
     @Autowired
+    public void setDiscoveryHistoryService(DiscoveryHistoryService discoveryHistoryService) {
+        this.discoveryHistoryService = discoveryHistoryService;
+    }
+
+    private DiscoveryService discoveryService;
     private DiscoveryHistoryService discoveryHistoryService;
 
     @Override
@@ -45,7 +50,7 @@ public class DiscoveryControllerImpl implements DiscoveryController {
     }
 
     @Override
-    public DiscoveryProviderDto getDiscovery(String uuid, DiscoveryDataRequestDto request) throws IOException, NotFoundException {
+    public DiscoveryProviderDto getDiscovery(String uuid, DiscoveryDataRequestDto request) throws NotFoundException {
         DiscoveryHistory history = discoveryHistoryService.getHistoryByUuid(uuid);
         return discoveryService.getProviderDtoData(request, history);
     }

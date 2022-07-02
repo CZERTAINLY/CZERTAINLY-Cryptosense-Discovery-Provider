@@ -21,6 +21,10 @@ public class DiscoveryHistoryServiceImpl implements DiscoveryHistoryService {
 	private static final Logger logger = LoggerFactory.getLogger(DiscoveryHistoryServiceImpl.class);
 
 	@Autowired
+	public void setDiscoveryHistoryRepository (DiscoveryHistoryRepository discoveryHistoryRepository) {
+		this.discoveryHistoryRepository = discoveryHistoryRepository;
+	}
+
 	private DiscoveryHistoryRepository discoveryHistoryRepository;
 
 	@Override

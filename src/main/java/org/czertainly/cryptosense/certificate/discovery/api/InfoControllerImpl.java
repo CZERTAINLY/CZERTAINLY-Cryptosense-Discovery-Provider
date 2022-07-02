@@ -19,6 +19,10 @@ public class InfoControllerImpl implements InfoController {
     private static final Logger logger = LoggerFactory.getLogger(InfoControllerImpl.class);
 
     @Autowired
+    public void setEndpointsListener(EndpointsListener endpointsListener) {
+        this.endpointsListener = endpointsListener;
+    }
+
     private EndpointsListener endpointsListener;
 
     @Override
@@ -27,7 +31,7 @@ public class InfoControllerImpl implements InfoController {
     	List<String> kind = List.of("Cryptosense");
     	List<InfoResponse> functions = new ArrayList<>(); 
         functions.add(new InfoResponse(kind, FunctionGroupCode.DISCOVERY_PROVIDER, endpointsListener.getEndpoints()));
-        logger.debug("Functions of the connector is obtained. Value is {}", functions.toString());
+        logger.debug("Functions of the connector is obtained. Value is {}", functions);
         return functions;
     }
 }

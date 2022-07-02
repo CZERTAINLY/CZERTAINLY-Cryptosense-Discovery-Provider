@@ -1,6 +1,7 @@
 package org.czertainly.cryptosense.certificate.discovery.service;
 
-import com.czertainly.api.model.common.ResponseAttributeDto;
+import com.czertainly.api.model.common.attribute.ResponseAttributeDto;
+import com.czertainly.api.model.common.attribute.content.BaseAttributeContent;
 import com.czertainly.api.model.core.credential.CredentialDto;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
@@ -14,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
+import java.util.List;
 
 @SpringBootTest
 @Transactional
@@ -44,8 +45,8 @@ public class AnalyzerTest {
         ResponseAttributeDto apiKey = new ResponseAttributeDto();
         apiKey.setUuid("aac5c2d5-5dc3-4ddb-9dfa-3d76b99135f8");
         apiKey.setName("apiKey");
-        apiKey.setValue("asdfEDssdfhcHJSHxhFxf");
-        credDto.setAttributes(Arrays.asList(apiKey));
+        apiKey.setContent(new BaseAttributeContent<>("asdfEDssdfhcHJSHxhFxf"));
+        credDto.setAttributes(List.of(apiKey));
     }
 
     @AfterEach

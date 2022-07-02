@@ -1,6 +1,7 @@
 package org.czertainly.cryptosense.certificate.discovery.service;
 
-import com.czertainly.api.model.common.RequestAttributeDto;
+import com.czertainly.api.model.common.attribute.RequestAttributeDto;
+import com.czertainly.api.model.common.attribute.content.BaseAttributeContent;
 import com.czertainly.api.model.connector.discovery.DiscoveryDataRequestDto;
 import com.czertainly.api.model.connector.discovery.DiscoveryRequestDto;
 import org.czertainly.cryptosense.certificate.discovery.dao.DiscoveryHistory;
@@ -41,12 +42,12 @@ public class DiscoveryServiceTest {
 
         RequestAttributeDto apiUrl = new RequestAttributeDto();
         apiUrl.setUuid("1b6c48ad-c1c7-4c82-91ef-3e61bc9f52ac");
-        apiUrl.setValue("https://analyzer.cryptosense.com/api/v2");
+        apiUrl.setContent(new BaseAttributeContent<>("https://analyzer.cryptosense.com/api/v2"));
         apiUrl.setName("apiUrl");
 
         RequestAttributeDto credentialKind = new RequestAttributeDto();
         credentialKind.setUuid("9379ca2c-aa51-42c8-8afd-2a2d16c99c56");
-        credentialKind.setValue(null);
+        //credentialKind.setContent(null);
         credentialKind.setName("credentialKind");
         discoveryProviderDtoTest.setAttributes(Arrays.asList(apiUrl, credentialKind));
 

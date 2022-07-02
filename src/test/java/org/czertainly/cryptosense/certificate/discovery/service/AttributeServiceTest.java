@@ -1,7 +1,8 @@
 package org.czertainly.cryptosense.certificate.discovery.service;
 
-import com.czertainly.api.model.common.AttributeDefinition;
-import com.czertainly.api.model.common.RequestAttributeDto;
+import com.czertainly.api.model.common.attribute.AttributeDefinition;
+import com.czertainly.api.model.common.attribute.RequestAttributeDto;
+import com.czertainly.api.model.common.attribute.content.BaseAttributeContent;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,12 +23,12 @@ public class AttributeServiceTest {
     private void setup(){
         RequestAttributeDto apiUrl = new RequestAttributeDto();
         apiUrl.setUuid("1b6c48ad-c1c7-4c82-91ef-3e61bc9f52ac");
-        apiUrl.setValue("https://analyzer.cryptosense.com/api/v2");
+        apiUrl.setContent(new BaseAttributeContent<>("https://analyzer.cryptosense.com/api/v2"));
         apiUrl.setName("apiUrl");
 
         RequestAttributeDto credentialKind = new RequestAttributeDto();
         apiUrl.setUuid("9379ca2c-aa51-42c8-8afd-2a2d16c99c56");
-        apiUrl.setValue(null);
+        //apiUrl.setContent(null);
         apiUrl.setName("credentialKind");
 
         attributes = Arrays.asList(apiUrl, credentialKind);
@@ -35,7 +36,7 @@ public class AttributeServiceTest {
 
     @Test
     public void testAttributeResponse() {
-        List<AttributeDefinition> attributes = attributeService.getAttributes("IP-Hostname");
+        List<AttributeDefinition> attributes = attributeService.getAttributes("Cryptosense");
         Assertions.assertNotNull(attributes);
     }
 
