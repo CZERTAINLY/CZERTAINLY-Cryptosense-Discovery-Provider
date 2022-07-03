@@ -2,8 +2,8 @@ package org.czertainly.cryptosense.certificate.discovery.api;
 
 import com.czertainly.api.exception.ValidationException;
 import com.czertainly.api.interfaces.connector.AttributesController;
-import com.czertainly.api.model.common.AttributeDefinition;
-import com.czertainly.api.model.common.RequestAttributeDto;
+import com.czertainly.api.model.common.attribute.AttributeDefinition;
+import com.czertainly.api.model.common.attribute.RequestAttributeDto;
 import org.czertainly.cryptosense.certificate.discovery.service.AttributeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +18,12 @@ import java.util.List;
 public class AttributesControllerImpl implements AttributesController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AttributesControllerImpl.class);
-	
-	@Autowired
+
+    @Autowired
+    public void setAttributeService(AttributeService attributeService) {
+        this.attributeService = attributeService;
+    }
+
 	private AttributeService attributeService;
 
     @Override
@@ -28,7 +32,6 @@ public class AttributesControllerImpl implements AttributesController {
         return attributeService.getAttributes(kind);
     }
 
-    
     @Override
     public void validateAttributes(@PathVariable String kind, @RequestBody List<RequestAttributeDto> attributes) throws ValidationException {
         attributeService.validateAttributes(kind, attributes);

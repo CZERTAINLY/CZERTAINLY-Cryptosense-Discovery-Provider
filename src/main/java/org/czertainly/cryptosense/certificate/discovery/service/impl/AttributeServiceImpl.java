@@ -1,6 +1,7 @@
 package org.czertainly.cryptosense.certificate.discovery.service.impl;
 
-import com.czertainly.api.model.common.*;
+import com.czertainly.api.model.common.attribute.*;
+import com.czertainly.api.model.common.attribute.content.BaseAttributeContent;
 import com.czertainly.core.util.AttributeDefinitionUtils;
 import org.czertainly.cryptosense.certificate.discovery.service.AttributeService;
 import org.slf4j.Logger;
@@ -55,7 +56,7 @@ public class AttributeServiceImpl implements AttributeService {
          */
         attributes.add(getReportsAttribute());
 
-        logger.debug("Attributes constructed. {}", attributes.toString());
+        logger.debug("Attributes constructed. {}", attributes);
         return attributes;
     }
 
@@ -70,11 +71,13 @@ public class AttributeServiceImpl implements AttributeService {
         apiUrl.setUuid("1b6c48ad-c1c7-4c82-91ef-3e61bc9f52ac");
         apiUrl.setName(ATTRIBUTE_API_URL);
         apiUrl.setLabel(ATTRIBUTE_API_URL_LABEL);
-        apiUrl.setType(BaseAttributeDefinitionTypes.STRING);
+        apiUrl.setType(AttributeType.STRING);
         apiUrl.setRequired(true);
         apiUrl.setReadOnly(false);
         apiUrl.setVisible(true);
-        apiUrl.setValue("https://analyzer.cryptosense.com/api/v2");
+        apiUrl.setList(false);
+        apiUrl.setMultiSelect(false);
+        apiUrl.setContent(new BaseAttributeContent<>("https://analyzer.cryptosense.com/api/v2"));
         apiUrl.setDescription("Cryptosense Analyzer URL to access the API");
         apiUrl.setValidationRegex("^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$");
         return apiUrl;
@@ -86,11 +89,13 @@ public class AttributeServiceImpl implements AttributeService {
         credentialKind.setName(ATTRIBUTE_CREDENTIAL_KIND);
         credentialKind.setLabel(ATTRIBUTE_CREDENTIAL_KIND_LABEL);
         credentialKind.setDescription("API Key to authorize communication with the Analyzer");
-        credentialKind.setType(BaseAttributeDefinitionTypes.STRING);
+        credentialKind.setType(AttributeType.STRING);
         credentialKind.setRequired(false);
         credentialKind.setReadOnly(true);
         credentialKind.setVisible(false);
-        credentialKind.setValue("ApiKey");
+        credentialKind.setList(false);
+        credentialKind.setMultiSelect(false);
+        credentialKind.setContent(new BaseAttributeContent<>("ApiKey"));
         return credentialKind;
     }
 
@@ -100,10 +105,12 @@ public class AttributeServiceImpl implements AttributeService {
         credentialKind.setName(ATTRIBUTE_CREDENTIAL);
         credentialKind.setLabel(ATTRIBUTE_CREDENTIAL_LABEL);
         credentialKind.setDescription("Credential for the communication");
-        credentialKind.setType(BaseAttributeDefinitionTypes.CREDENTIAL);
+        credentialKind.setType(AttributeType.CREDENTIAL);
         credentialKind.setRequired(true);
         credentialKind.setReadOnly(false);
         credentialKind.setVisible(true);
+        credentialKind.setList(true);
+        credentialKind.setMultiSelect(false);
 
         Set<AttributeCallbackMapping> mappings = new HashSet<>();
         mappings.add(new AttributeCallbackMapping(
@@ -126,10 +133,13 @@ public class AttributeServiceImpl implements AttributeService {
         projectsList.setName(ATTRIBUTE_PROJECT);
         projectsList.setLabel(ATTRIBUTE_PROJECT_LABEL);
         projectsList.setDescription("List of available projects");
-        projectsList.setType(BaseAttributeDefinitionTypes.LIST);
+        projectsList.setType(AttributeType.JSON);
         projectsList.setRequired(true);
         projectsList.setReadOnly(false);
-        projectsList.setValue(true);
+        projectsList.setVisible(true);
+        projectsList.setList(true);
+        projectsList.setMultiSelect(false);
+        projectsList.setContent(List.of());
 
         Set<AttributeCallbackMapping> mappings = new HashSet<>();
         mappings.add(new AttributeCallbackMapping(
@@ -138,7 +148,7 @@ public class AttributeServiceImpl implements AttributeService {
                 AttributeValueTarget.BODY));
         mappings.add(new AttributeCallbackMapping(
                 ATTRIBUTE_CREDENTIAL,
-                BaseAttributeDefinitionTypes.CREDENTIAL,
+                AttributeType.CREDENTIAL,
                 "credentialKind",
                 AttributeValueTarget.BODY));
 
@@ -157,10 +167,13 @@ public class AttributeServiceImpl implements AttributeService {
         reportsList.setName(ATTRIBUTE_REPORT);
         reportsList.setLabel(ATTRIBUTE_REPORT_LABEL);
         reportsList.setDescription("List of available reports");
-        reportsList.setType(BaseAttributeDefinitionTypes.LIST);
+        reportsList.setType(AttributeType.JSON);
         reportsList.setRequired(true);
         reportsList.setReadOnly(false);
-        reportsList.setValue(true);
+        reportsList.setVisible(true);
+        reportsList.setList(true);
+        reportsList.setMultiSelect(false);
+        reportsList.setContent(List.of());
 
         Set<AttributeCallbackMapping> mappings = new HashSet<>();
         mappings.add(new AttributeCallbackMapping(
@@ -169,11 +182,11 @@ public class AttributeServiceImpl implements AttributeService {
                 AttributeValueTarget.BODY));
         mappings.add(new AttributeCallbackMapping(
                 ATTRIBUTE_CREDENTIAL,
-                BaseAttributeDefinitionTypes.CREDENTIAL,
+                AttributeType.CREDENTIAL,
                 "credentialKind",
                 AttributeValueTarget.BODY));
         mappings.add(new AttributeCallbackMapping(
-                "project",
+                "project.id",
                 "projectId",
                 AttributeValueTarget.PATH_VARIABLE));
 
