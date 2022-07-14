@@ -1,5 +1,6 @@
 package org.czertainly.cryptosense.certificate.discovery.service.impl;
 
+import com.czertainly.api.exception.NotFoundException;
 import com.czertainly.api.model.common.attribute.content.BaseAttributeContent;
 import com.czertainly.api.model.connector.discovery.DiscoveryDataRequestDto;
 import com.czertainly.api.model.connector.discovery.DiscoveryProviderDto;
@@ -86,6 +87,14 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 			history.setStatus(DiscoveryStatus.FAILED);
 			throw e;
 		}
+	}
+
+	@Override
+	public void deleteDiscovery(String uuid) throws NotFoundException {
+		DiscoveryHistory discoveryHistory = discoveryHistoryService.getHistoryByUuid(uuid);
+		List<Certificate> certificates = certificateRepository.findByDiscoveryId(discoveryHistory.getId());
+		certificateRepository.deleteAll(certificates);
+		discoveryHistoryService.deleteHistory(discoveryHistory);
 	}
 
 	private void discoverCertificateInternal(DiscoveryRequestDto request, DiscoveryHistory history) throws NullPointerException {
