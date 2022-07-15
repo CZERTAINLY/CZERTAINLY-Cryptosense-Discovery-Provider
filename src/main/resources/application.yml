@@ -1,12 +1,13 @@
 server:
-  port: ${PORT:8090}
+  port: ${PORT:8091}
 spring:
   datasource:
     auto-commit: false
     driver-class-name: org.postgresql.Driver
-    password: ${JDBC_PASSWORD}
-    url: ${JDBC_URL}
-    username: ${JDBC_USERNAME}
+    url: 'jdbc:postgresql://localhost:5432/czertainly?characterEncoding=UTF-8'
+    username: 'postgres'
+    password: 'root'
+
   flyway:
     out-of-order: true
     table: "cryptosense_schema_history"
