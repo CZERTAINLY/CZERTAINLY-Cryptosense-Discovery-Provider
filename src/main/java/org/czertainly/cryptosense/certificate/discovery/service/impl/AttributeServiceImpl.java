@@ -91,7 +91,7 @@ public class AttributeServiceImpl implements AttributeService {
         credentialKind.setDescription("API Key to authorize communication with the Analyzer");
         credentialKind.setType(AttributeType.STRING);
         credentialKind.setRequired(false);
-        credentialKind.setReadOnly(true);
+        credentialKind.setReadOnly(false);
         credentialKind.setVisible(false);
         credentialKind.setList(false);
         credentialKind.setMultiSelect(false);
@@ -186,7 +186,7 @@ public class AttributeServiceImpl implements AttributeService {
                 "credentialKind",
                 AttributeValueTarget.BODY));
         mappings.add(new AttributeCallbackMapping(
-                "project.id",
+                "project.data.id",
                 "projectId",
                 AttributeValueTarget.PATH_VARIABLE));
 
