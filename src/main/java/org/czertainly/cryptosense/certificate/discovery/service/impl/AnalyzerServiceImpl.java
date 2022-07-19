@@ -1,5 +1,6 @@
 package org.czertainly.cryptosense.certificate.discovery.service.impl;
 
+import com.czertainly.api.model.common.attribute.content.BaseAttributeContent;
 import com.czertainly.core.util.AttributeDefinitionUtils;
 import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerCertificate;
 import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerProject;
@@ -45,7 +46,7 @@ public class AnalyzerServiceImpl implements AnalyzerService {
         graphQLRequestBody.setQuery(query);
         //graphQLRequestBody.setVariables(variables.replace("countryCode", countryCode));
         //CredentialDto apiKey = AttributeDefinitionUtils.getCredentialValue("apiKey", request.getApiKey().getAttributes());
-        String apiKey = AttributeDefinitionUtils.getAttributeValue("apiKey", request.getCredentialKind().getAttributes());
+        String apiKey = AttributeDefinitionUtils.getAttributeContentValue("apiKey", request.getCredentialKind().getAttributes(), BaseAttributeContent.class);
         AnalyzerDto response = webClient.post()
                 .uri(request.getApiUrl())
                 .header("API-KEY", apiKey)
@@ -55,7 +56,7 @@ public class AnalyzerServiceImpl implements AnalyzerService {
                 .bodyToMono(AnalyzerDto.class)
                 .block();
 
-        List<AnalyzerProject> listOfProjects = new ArrayList<AnalyzerProject>();
+        List<AnalyzerProject> listOfProjects = new ArrayList<>();
         if(response == null || response.getData() == null){
             return listOfProjects;
         }
@@ -84,7 +85,7 @@ public class AnalyzerServiceImpl implements AnalyzerService {
 
     @Override
     public List<AnalyzerReport> getAvailableReports(AnalyzerRequestDto request, String projectId) {
-        List<AnalyzerReport> listOfReports = new ArrayList<AnalyzerReport>();
+        List<AnalyzerReport> listOfReports = new ArrayList<>();
 
         if (projectId.equals("ALL")) { // search through all available reports
             AnalyzerReport project = new AnalyzerReport(
@@ -112,7 +113,7 @@ public class AnalyzerServiceImpl implements AnalyzerService {
                 graphQLRequestBody.setVariables(variables.replace("projectId", projectId));
             }
 
-            String apiKey = AttributeDefinitionUtils.getAttributeValue("apiKey", request.getCredentialKind().getAttributes());
+            String apiKey = AttributeDefinitionUtils.getAttributeContentValue("apiKey", request.getCredentialKind().getAttributes(), BaseAttributeContent.class);
 
             AnalyzerDto response = webClient.post()
                     .uri(request.getApiUrl())
@@ -171,7 +172,7 @@ public class AnalyzerServiceImpl implements AnalyzerService {
             graphQLRequestBody.setVariables(variables.replace("reportId", reportId));
         }
 
-        String apiKey = AttributeDefinitionUtils.getAttributeValue("apiKey", request.getCredentialKind().getAttributes());
+        String apiKey = AttributeDefinitionUtils.getAttributeContentValue("apiKey", request.getCredentialKind().getAttributes(), BaseAttributeContent.class);
 
         AnalyzerDto response = webClient.post()
                 .uri(request.getApiUrl())
@@ -181,7 +182,7 @@ public class AnalyzerServiceImpl implements AnalyzerService {
                 .retrieve()
                 .bodyToMono(AnalyzerDto.class)
                 .block();
-        List<AnalyzerCertificate> listOfCertificates = new ArrayList<AnalyzerCertificate>();
+        List<AnalyzerCertificate> listOfCertificates = new ArrayList<>();
         if(response == null || response.getData() == null){
             return listOfCertificates;
         }

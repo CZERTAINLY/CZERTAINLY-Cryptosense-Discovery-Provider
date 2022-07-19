@@ -21,6 +21,10 @@ public class DiscoveryHistoryServiceImpl implements DiscoveryHistoryService {
 	private static final Logger logger = LoggerFactory.getLogger(DiscoveryHistoryServiceImpl.class);
 
 	@Autowired
+	public void setDiscoveryHistoryRepository (DiscoveryHistoryRepository discoveryHistoryRepository) {
+		this.discoveryHistoryRepository = discoveryHistoryRepository;
+	}
+
 	private DiscoveryHistoryRepository discoveryHistoryRepository;
 
 	@Override
@@ -48,5 +52,10 @@ public class DiscoveryHistoryServiceImpl implements DiscoveryHistoryService {
 	
 	public void setHistory(DiscoveryHistory history) {
 		discoveryHistoryRepository.save(history);
+	}
+
+	@Override
+	public void deleteHistory(DiscoveryHistory history) {
+		discoveryHistoryRepository.delete(history);
 	}
 }

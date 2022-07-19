@@ -6,7 +6,6 @@ query {
                     node {
                         id
                         name
-                        api
                     }
                 }
             }

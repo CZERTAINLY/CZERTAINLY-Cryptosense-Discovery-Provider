@@ -1,13 +1,13 @@
 package org.czertainly.cryptosense.certificate.discovery.service.impl;
 
-import com.czertainly.api.model.common.RequestAttributeDto;
+import com.czertainly.api.exception.NotFoundException;
+import com.czertainly.api.model.common.attribute.content.BaseAttributeContent;
 import com.czertainly.api.model.connector.discovery.DiscoveryDataRequestDto;
 import com.czertainly.api.model.connector.discovery.DiscoveryProviderDto;
 import com.czertainly.api.model.connector.discovery.DiscoveryRequestDto;
 import com.czertainly.api.model.core.credential.CredentialDto;
 import com.czertainly.api.model.core.discovery.DiscoveryStatus;
 import com.czertainly.core.util.AttributeDefinitionUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerCertificate;
 import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerProject;
 import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerReport;
@@ -42,12 +42,20 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 	private static final int PAGE_SIZE = 100;
 
 	@Autowired
+	public void setAnalyzerService(AnalyzerService analyzerService) {
+		this.analyzerService = analyzerService;
+	}
+	@Autowired
+	public void setCertificateRepository(CertificateRepository certificateRepository) {
+		this.certificateRepository = certificateRepository;
+	}
+	@Autowired
+	public void setDiscoveryHistoryService(DiscoveryHistoryService discoveryHistoryService) {
+		this.discoveryHistoryService = discoveryHistoryService;
+	}
+
 	private AnalyzerService analyzerService;
-
-	@Autowired
 	private CertificateRepository certificateRepository;
-
-	@Autowired
 	private DiscoveryHistoryService discoveryHistoryService;
 	
 	@Override
@@ -81,14 +89,21 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 		}
 	}
 
+	@Override
+	public void deleteDiscovery(String uuid) throws NotFoundException {
+		DiscoveryHistory discoveryHistory = discoveryHistoryService.getHistoryByUuid(uuid);
+		List<Certificate> certificates = certificateRepository.findByDiscoveryId(discoveryHistory.getId());
+		certificateRepository.deleteAll(certificates);
+		discoveryHistoryService.deleteHistory(discoveryHistory);
+	}
+
 	private void discoverCertificateInternal(DiscoveryRequestDto request, DiscoveryHistory history) throws NullPointerException {
 		logger.info("Discovery initiated for the request with name {}", request.getName());
 		Map<String, Object> meta = new LinkedHashMap<>();
-		String apiUrl = (String) getAttributeValue(request, AttributeServiceImpl.ATTRIBUTE_API_URL);
-		CredentialDto apiKeyCredential = AttributeDefinitionUtils.getCredentialValue("apiKey", request.getAttributes());
-		final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
-		final AnalyzerProject selectedProject = mapper.convertValue(getAttributeValue(request, AttributeServiceImpl.ATTRIBUTE_PROJECT), AnalyzerProject.class);
-		final AnalyzerReport selectedReport = mapper.convertValue(getAttributeValue(request, AttributeServiceImpl.ATTRIBUTE_REPORT), AnalyzerReport.class);
+		String apiUrl = AttributeDefinitionUtils.getAttributeContentValue(AttributeServiceImpl.ATTRIBUTE_API_URL, request.getAttributes(), BaseAttributeContent.class);
+		CredentialDto apiKeyCredential = AttributeDefinitionUtils.getCredentialContent("apiKey", request.getAttributes());
+		final AnalyzerProject selectedProject = AttributeDefinitionUtils.getJsonAttributeContentData(AttributeServiceImpl.ATTRIBUTE_PROJECT, request.getAttributes(), AnalyzerProject.class);
+		final AnalyzerReport selectedReport = AttributeDefinitionUtils.getJsonAttributeContentData(AttributeServiceImpl.ATTRIBUTE_REPORT, request.getAttributes(), AnalyzerReport.class);
 		AnalyzerRequestDto analyzerRequestDto = new AnalyzerRequestDto();
 		analyzerRequestDto.setApiUrl(apiUrl);
 		analyzerRequestDto.setCredentialKind(apiKeyCredential);
@@ -109,7 +124,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 							try {
 								listOfCertificates = analyzerService.listCertificates(analyzerRequestDto, analyzerReport.getId());
 							}catch (Exception e){
-								logger.error("Failed to discover Certificates: ", e.getMessage());
+								logger.error("Failed to discover Certificates: {}", e.getMessage());
 								history.setStatus(DiscoveryStatus.FAILED);
 								meta.put("reason", e.getMessage());
 								history.setMeta(MetaDefinitions.serialize(meta));
@@ -144,7 +159,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 					try {
 						listOfCertificates = analyzerService.listCertificates(analyzerRequestDto, analyzerReport.getId());
 					}catch (Exception e) {
-						logger.error("Failed to discover Certificates: ", e.getMessage());
+						logger.error("Failed to discover Certificates: {}", e.getMessage());
 						history.setStatus(DiscoveryStatus.FAILED);
 						meta.put("reason", e.getMessage());
 						history.setMeta(MetaDefinitions.serialize(meta));
@@ -171,7 +186,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 			try {
 				listOfCertificates = analyzerService.listCertificates(analyzerRequestDto, selectedReport.getId());
 			}catch (Exception e) {
-				logger.error("Failed to discover Certificates: ", e.getMessage());
+				logger.error("Failed to discover Certificates: {}", e.getMessage());
 				history.setStatus(DiscoveryStatus.FAILED);
 				meta.put("reason", e.getMessage());
 				history.setMeta(MetaDefinitions.serialize(meta));
@@ -231,7 +246,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 			meta.put("analyzerReportName", analyzerReport.getName());
 			meta.put("analyzerReportId", reportId);
 			meta.put("analyzerCertificateId", certificateId);
-			meta.put("discoverySource","Analyzer");
+			meta.put("discoverySource", "Analyzer");
 			cert.setUuid(UUID.randomUUID().toString());
 			cert.setDiscoveryId(discoveryId);
 			cert.setBase64Content(analyzerCertificate.getEncoded());
@@ -240,15 +255,4 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 			certificateRepository.save(cert);
 		}
 	}
-
-	private static Object getAttributeValue(DiscoveryRequestDto request, String attributeName) {
-		List<RequestAttributeDto> attributes = request.getAttributes();
-		for(RequestAttributeDto attribute: attributes) {
-			if (attribute.getName().equals(attributeName)) {
-				return attribute.getValue();
-			}
-		}
-		return null;
-	}
-	
 }
