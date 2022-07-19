@@ -37,12 +37,12 @@ For more information regarding the `Discovery`, please refer to the [CZERTAINLY 
 
 ## Docker container
 
-`Cryptosense` `Discovery Provider` is provided as a Docker container. Use the `3keycompany/czertainly-cryptosense-discovery-provider:tagname` to pull the required image from the repository. It can be configured using the following environment variables:
+`Cryptosense` `Discovery Provider` is provided as a Docker container. Use the `docker pull harbor.3key.company/czertainly/czertainly-cryptosense-discovery-provider:tagname` to pull the required image from the repository. It can be configured using the following environment variables:
 
-| Variable | Description | Required | Default value |
-| --- | --- | --- | --- |
-| `JDBC_URL` | JDBC URL for database access | Yes | N/A |
-| `JDBC_USERNAME` | Username to access the database | Yes | N/A |
-| `JDBC_PASSWORD` | Password to access the database | Yes | N/A |
-| `DB_SCHEMA` | Database schema to use | No | cryptosense |
-| `PORT` | Port where the service is exposed | No | 8090 |
+| Variable        | Description                       | Required | Default value |
+|-----------------|-----------------------------------|----------|---------------|
+| `JDBC_URL`      | JDBC URL for database access      | Yes      | N/A           |
+| `JDBC_USERNAME` | Username to access the database   | Yes      | N/A           |
+| `JDBC_PASSWORD` | Password to access the database   | Yes      | N/A           |
+| `DB_SCHEMA`     | Database schema to use            | No       | cryptosense   |
+| `PORT`          | Port where the service is exposed | No       | 8090          |
