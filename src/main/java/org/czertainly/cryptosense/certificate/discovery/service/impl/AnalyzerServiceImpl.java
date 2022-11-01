@@ -1,6 +1,8 @@
 package org.czertainly.cryptosense.certificate.discovery.service.impl;
 
 import com.czertainly.api.model.common.attribute.content.BaseAttributeContent;
+import com.czertainly.api.model.common.attribute.content.CredentialAttributeContent;
+import com.czertainly.api.model.common.attribute.content.SecretAttributeContent;
 import com.czertainly.core.util.AttributeDefinitionUtils;
 import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerCertificate;
 import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerProject;
@@ -46,7 +48,7 @@ public class AnalyzerServiceImpl implements AnalyzerService {
         graphQLRequestBody.setQuery(query);
         //graphQLRequestBody.setVariables(variables.replace("countryCode", countryCode));
         //CredentialDto apiKey = AttributeDefinitionUtils.getCredentialValue("apiKey", request.getApiKey().getAttributes());
-        String apiKey = AttributeDefinitionUtils.getAttributeContentValue("apiKey", request.getCredentialKind().getAttributes(), BaseAttributeContent.class);
+        String apiKey = AttributeDefinitionUtils.getSingleItemAttributeContentValue("apiKey", request.getCredentialKind().getAttributes(), SecretAttributeContent.class).getData().getSecret();
         AnalyzerDto response = webClient.post()
                 .uri(request.getApiUrl())
                 .header("API-KEY", apiKey)
@@ -113,7 +115,7 @@ public class AnalyzerServiceImpl implements AnalyzerService {
                 graphQLRequestBody.setVariables(variables.replace("projectId", projectId));
             }
 
-            String apiKey = AttributeDefinitionUtils.getAttributeContentValue("apiKey", request.getCredentialKind().getAttributes(), BaseAttributeContent.class);
+            String apiKey = AttributeDefinitionUtils.getSingleItemAttributeContentValue("apiKey", request.getCredentialKind().getAttributes(), SecretAttributeContent.class).getData().getSecret();
 
             AnalyzerDto response = webClient.post()
                     .uri(request.getApiUrl())
@@ -172,7 +174,7 @@ public class AnalyzerServiceImpl implements AnalyzerService {
             graphQLRequestBody.setVariables(variables.replace("reportId", reportId));
         }
 
-        String apiKey = AttributeDefinitionUtils.getAttributeContentValue("apiKey", request.getCredentialKind().getAttributes(), BaseAttributeContent.class);
+        String apiKey = AttributeDefinitionUtils.getSingleItemAttributeContentValue("apiKey", request.getCredentialKind().getAttributes(), SecretAttributeContent.class).getData().getSecret();
 
         AnalyzerDto response = webClient.post()
                 .uri(request.getApiUrl())

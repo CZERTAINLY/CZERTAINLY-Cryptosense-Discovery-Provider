@@ -1,7 +1,7 @@
 package org.czertainly.cryptosense.certificate.discovery.service;
 
-import com.czertainly.api.model.common.attribute.RequestAttributeDto;
-import com.czertainly.api.model.common.attribute.content.BaseAttributeContent;
+import com.czertainly.api.model.client.attribute.RequestAttributeDto;
+import com.czertainly.api.model.common.attribute.content.StringAttributeContent;
 import com.czertainly.api.model.connector.discovery.DiscoveryDataRequestDto;
 import com.czertainly.api.model.connector.discovery.DiscoveryRequestDto;
 import org.czertainly.cryptosense.certificate.discovery.dao.DiscoveryHistory;
@@ -15,6 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import javax.transaction.Transactional;
 import java.util.Arrays;
+import java.util.List;
 
 @SpringBootTest
 @Transactional
@@ -42,7 +43,7 @@ public class DiscoveryServiceTest {
 
         RequestAttributeDto apiUrl = new RequestAttributeDto();
         apiUrl.setUuid("1b6c48ad-c1c7-4c82-91ef-3e61bc9f52ac");
-        apiUrl.setContent(new BaseAttributeContent<>("https://analyzer.cryptosense.com/api/v2"));
+        apiUrl.setContent(List.of(new StringAttributeContent("https://analyzer.cryptosense.com/api/v2")));
         apiUrl.setName("apiUrl");
 
         RequestAttributeDto credentialKind = new RequestAttributeDto();
@@ -56,7 +57,7 @@ public class DiscoveryServiceTest {
     }
 
     @Test
-    public void getProviderDtoDataTest(){
+    public void getProviderDtoDataTest() {
         Assertions.assertAll(() -> discoveryService.getProviderDtoData(discoveryProviderDtoTestExists, discoveryHistory));
     }
 
