@@ -3,7 +3,7 @@ package org.czertainly.cryptosense.certificate.discovery.api;
 import com.czertainly.api.exception.ValidationException;
 import com.czertainly.api.interfaces.connector.AttributesController;
 import com.czertainly.api.model.client.attribute.RequestAttributeDto;
-import com.czertainly.api.model.common.attribute.BaseAttribute;
+import com.czertainly.api.model.common.attribute.v2.BaseAttribute;
 import org.czertainly.cryptosense.certificate.discovery.service.AttributeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,6 +1,6 @@
 package org.czertainly.cryptosense.certificate.discovery.api;
 
-import com.czertainly.api.model.common.attribute.content.ObjectAttributeContent;
+import com.czertainly.api.model.common.attribute.v2.content.ObjectAttributeContent;
 import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerCertificate;
 import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerProject;
 import org.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerReport;

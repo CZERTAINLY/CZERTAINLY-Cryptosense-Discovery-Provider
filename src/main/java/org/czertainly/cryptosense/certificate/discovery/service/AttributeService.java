@@ -1,7 +1,7 @@
 package org.czertainly.cryptosense.certificate.discovery.service;
 
 import com.czertainly.api.model.client.attribute.RequestAttributeDto;
-import com.czertainly.api.model.common.attribute.BaseAttribute;
+import com.czertainly.api.model.common.attribute.v2.BaseAttribute;
 
 import java.util.List;
 

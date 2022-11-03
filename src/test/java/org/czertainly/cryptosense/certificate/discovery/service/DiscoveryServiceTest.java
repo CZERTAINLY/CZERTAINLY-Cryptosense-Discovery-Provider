@@ -1,7 +1,7 @@
 package org.czertainly.cryptosense.certificate.discovery.service;
 
 import com.czertainly.api.model.client.attribute.RequestAttributeDto;
-import com.czertainly.api.model.common.attribute.content.StringAttributeContent;
+import com.czertainly.api.model.common.attribute.v2.content.StringAttributeContent;
 import com.czertainly.api.model.connector.discovery.DiscoveryDataRequestDto;
 import com.czertainly.api.model.connector.discovery.DiscoveryRequestDto;
 import org.czertainly.cryptosense.certificate.discovery.dao.DiscoveryHistory;
