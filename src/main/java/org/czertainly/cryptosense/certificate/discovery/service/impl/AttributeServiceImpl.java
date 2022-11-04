@@ -1,7 +1,7 @@
 package org.czertainly.cryptosense.certificate.discovery.service.impl;
 
 import com.czertainly.api.model.client.attribute.RequestAttributeDto;
-import com.czertainly.api.model.common.attribute.v2.AttributeProperties;
+import com.czertainly.api.model.common.attribute.v2.DataAttributeProperties;
 import com.czertainly.api.model.common.attribute.v2.AttributeType;
 import com.czertainly.api.model.common.attribute.v2.BaseAttribute;
 import com.czertainly.api.model.common.attribute.v2.DataAttribute;
@@ -80,13 +80,13 @@ public class AttributeServiceImpl implements AttributeService {
         apiUrl.setName(ATTRIBUTE_API_URL);
         apiUrl.setType(AttributeType.DATA);
         apiUrl.setContentType(AttributeContentType.STRING);
-        AttributeProperties apiUrlProperties = new AttributeProperties();
+        DataAttributeProperties apiUrlProperties = new DataAttributeProperties();
         apiUrlProperties.setLabel(ATTRIBUTE_API_URL_LABEL);
         apiUrlProperties.setRequired(true);
         apiUrlProperties.setReadOnly(false);
         apiUrlProperties.setVisible(true);
         apiUrlProperties.setList(false);
-        apiUrlProperties.setMulti(false);
+        apiUrlProperties.setMultiSelect(false);
         apiUrl.setProperties(apiUrlProperties);
         apiUrl.setContent(List.of(new StringAttributeContent("https://analyzer.cryptosense.com/api/v2")));
         apiUrl.setDescription("Cryptosense Analyzer URL to access the API");
@@ -105,13 +105,13 @@ public class AttributeServiceImpl implements AttributeService {
         credentialKind.setDescription("API Key to authorize communication with the Analyzer");
         credentialKind.setType(AttributeType.DATA);
         credentialKind.setContentType(AttributeContentType.STRING);
-        AttributeProperties credentialKindProperties = new AttributeProperties();
+        DataAttributeProperties credentialKindProperties = new DataAttributeProperties();
         credentialKindProperties.setLabel(ATTRIBUTE_CREDENTIAL_KIND_LABEL);
         credentialKindProperties.setRequired(false);
         credentialKindProperties.setReadOnly(false);
         credentialKindProperties.setVisible(false);
         credentialKindProperties.setList(false);
-        credentialKindProperties.setMulti(false);
+        credentialKindProperties.setMultiSelect(false);
         credentialKind.setProperties(credentialKindProperties);
         credentialKind.setContent(List.of(new StringAttributeContent("ApiKey")));
         return credentialKind;
@@ -124,13 +124,13 @@ public class AttributeServiceImpl implements AttributeService {
         credentialKind.setDescription("Credential for the communication");
         credentialKind.setType(AttributeType.DATA);
         credentialKind.setContentType(AttributeContentType.CREDENTIAL);
-        AttributeProperties credentialKindProperties = new AttributeProperties();
+        DataAttributeProperties credentialKindProperties = new DataAttributeProperties();
         credentialKindProperties.setLabel(ATTRIBUTE_CREDENTIAL_LABEL);
         credentialKindProperties.setRequired(true);
         credentialKindProperties.setReadOnly(false);
         credentialKindProperties.setVisible(true);
         credentialKindProperties.setList(true);
-        credentialKindProperties.setMulti(false);
+        credentialKindProperties.setMultiSelect(false);
         credentialKind.setProperties(credentialKindProperties);
 
         Set<AttributeCallbackMapping> mappings = new HashSet<>();
@@ -155,13 +155,13 @@ public class AttributeServiceImpl implements AttributeService {
         projectsList.setDescription("List of available projects");
         projectsList.setType(AttributeType.DATA);
         projectsList.setContentType(AttributeContentType.OBJECT);
-        AttributeProperties projectsListProperties = new AttributeProperties();
+        DataAttributeProperties projectsListProperties = new DataAttributeProperties();
         projectsListProperties.setLabel(ATTRIBUTE_PROJECT_LABEL);
         projectsListProperties.setRequired(true);
         projectsListProperties.setReadOnly(false);
         projectsListProperties.setVisible(true);
         projectsListProperties.setList(true);
-        projectsListProperties.setMulti(false);
+        projectsListProperties.setMultiSelect(false);
         projectsList.setProperties(projectsListProperties);
         projectsList.setContent(List.of());
 
@@ -193,13 +193,13 @@ public class AttributeServiceImpl implements AttributeService {
         reportsList.setDescription("List of available reports");
         reportsList.setType(AttributeType.DATA);
         reportsList.setContentType(AttributeContentType.OBJECT);
-        AttributeProperties reportsListProperties = new AttributeProperties();
+        DataAttributeProperties reportsListProperties = new DataAttributeProperties();
         reportsListProperties.setLabel(ATTRIBUTE_REPORT_LABEL);
         reportsListProperties.setRequired(true);
         reportsListProperties.setReadOnly(false);
         reportsListProperties.setVisible(true);
         reportsListProperties.setList(true);
-        reportsListProperties.setMulti(false);
+        reportsListProperties.setMultiSelect(false);
         reportsList.setProperties(reportsListProperties);
         reportsList.setContent(List.of());
 
