@@ -2,13 +2,17 @@ package org.czertainly.cryptosense.certificate.discovery.api;
 
 import com.czertainly.api.exception.ValidationException;
 import com.czertainly.api.interfaces.connector.AttributesController;
-import com.czertainly.api.model.common.attribute.AttributeDefinition;
-import com.czertainly.api.model.common.attribute.RequestAttributeDto;
+import com.czertainly.api.model.client.attribute.RequestAttributeDto;
+import com.czertainly.api.model.common.attribute.v2.BaseAttribute;
 import org.czertainly.cryptosense.certificate.discovery.service.AttributeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -16,19 +20,18 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequestMapping("/v1/discoveryProvider/{kind}/attributes")
 public class AttributesControllerImpl implements AttributesController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(AttributesControllerImpl.class);
+
+    private static final Logger logger = LoggerFactory.getLogger(AttributesControllerImpl.class);
+    private AttributeService attributeService;
 
     @Autowired
     public void setAttributeService(AttributeService attributeService) {
         this.attributeService = attributeService;
     }
 
-	private AttributeService attributeService;
-
     @Override
-    public List<AttributeDefinition> listAttributeDefinitions(@PathVariable String kind){
-    	logger.info("Request to get the attribute for discovery for kind {}", kind);
+    public List<BaseAttribute> listAttributeDefinitions(@PathVariable String kind) {
+        logger.info("Request to get the attribute for discovery for kind {}", kind);
         return attributeService.getAttributes(kind);
     }
 
