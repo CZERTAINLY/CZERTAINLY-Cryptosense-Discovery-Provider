@@ -244,7 +244,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
         InfoAttribute inCompleteAttribute = new InfoAttribute();
         inCompleteAttribute.setName("incompleteCertificates");
         inCompleteAttribute.setUuid("d3d8c136-60ed-11ed-9b6a-0242ac120002");
-        inCompleteAttribute.setContentType(AttributeContentType.STRING);
+        inCompleteAttribute.setContentType(AttributeContentType.INTEGER);
         inCompleteAttribute.setType(AttributeType.INFO);
         inCompleteAttribute.setDescription("Incomplete Certificates");
 
@@ -369,7 +369,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
         InfoAttribute projectIdAttribute = new InfoAttribute();
         projectIdAttribute.setName("analyzerProjectId");
         projectIdAttribute.setUuid("88b109ce-60ee-11ed-9b6a-0242ac120002");
-        projectIdAttribute.setContentType(AttributeContentType.INTEGER);
+        projectIdAttribute.setContentType(AttributeContentType.STRING);
         projectIdAttribute.setType(AttributeType.INFO);
         projectIdAttribute.setDescription("Project ID from where the certificate is discovered");
 
@@ -385,7 +385,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
         InfoAttribute reportNameAttribute = new InfoAttribute();
         reportNameAttribute.setName("analyzerReportName");
         reportNameAttribute.setUuid("88b10b2c-60ee-11ed-9b6a-0242ac120002");
-        reportNameAttribute.setContentType(AttributeContentType.INTEGER);
+        reportNameAttribute.setContentType(AttributeContentType.STRING);
         reportNameAttribute.setType(AttributeType.INFO);
         reportNameAttribute.setDescription("Report Name from where the certificate is discovered");
 
@@ -401,7 +401,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
         InfoAttribute reportIdAttribute = new InfoAttribute();
         reportIdAttribute.setName("analyzerReportId");
         reportIdAttribute.setUuid("88b1102c-60ee-11ed-9b6a-0242ac120002");
-        reportIdAttribute.setContentType(AttributeContentType.INTEGER);
+        reportIdAttribute.setContentType(AttributeContentType.STRING);
         reportIdAttribute.setType(AttributeType.INFO);
         reportIdAttribute.setDescription("Report ID from where the certificate is discovered");
 
@@ -417,7 +417,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
         InfoAttribute certificateIdAttribute = new InfoAttribute();
         certificateIdAttribute.setName("analyzerCertificateId");
         certificateIdAttribute.setUuid("88b1128e-60ee-11ed-9b6a-0242ac120002");
-        certificateIdAttribute.setContentType(AttributeContentType.INTEGER);
+        certificateIdAttribute.setContentType(AttributeContentType.STRING);
         certificateIdAttribute.setType(AttributeType.INFO);
         certificateIdAttribute.setDescription("Certificate ID from where the certificate is discovered");
 
@@ -433,7 +433,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
         InfoAttribute sourceAttribute = new InfoAttribute();
         sourceAttribute.setName("discoverySource");
         sourceAttribute.setUuid("0ee5fc56-60f0-11ed-9b6a-0242ac120002");
-        sourceAttribute.setContentType(AttributeContentType.INTEGER);
+        sourceAttribute.setContentType(AttributeContentType.STRING);
         sourceAttribute.setType(AttributeType.INFO);
         sourceAttribute.setDescription("Discovery Source from where the certificate is discovered");
 
