@@ -1,11 +1,11 @@
 package com.czertainly.cryptosense.certificate.discovery.dao;
 
-import com.czertainly.api.model.common.attribute.v2.InfoAttribute;
+import com.czertainly.api.model.common.attribute.v2.MetadataAttribute;
 import com.czertainly.api.model.connector.discovery.DiscoveryProviderCertificateDataDto;
 import com.czertainly.core.util.AttributeDefinitionUtils;
+import com.czertainly.cryptosense.certificate.discovery.util.DtoMapper;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import com.czertainly.cryptosense.certificate.discovery.util.DtoMapper;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -43,7 +43,7 @@ public class Certificate extends Audited implements Serializable, DtoMapper<Disc
         DiscoveryProviderCertificateDataDto dto = new DiscoveryProviderCertificateDataDto();
         dto.setUuid(uuid);
         dto.setBase64Content(base64Content);
-        dto.setMeta(AttributeDefinitionUtils.deserialize(meta, InfoAttribute.class));
+        dto.setMeta(AttributeDefinitionUtils.deserialize(meta, MetadataAttribute.class));
         return dto;
     }
 
