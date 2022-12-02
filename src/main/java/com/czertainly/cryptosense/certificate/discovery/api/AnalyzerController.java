@@ -2,10 +2,10 @@ package com.czertainly.cryptosense.certificate.discovery.api;
 
 import com.czertainly.api.model.common.attribute.v2.content.ObjectAttributeContent;
 import com.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerCertificate;
-import com.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerReport;
-import com.czertainly.cryptosense.certificate.discovery.service.AnalyzerService;
 import com.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerProject;
+import com.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerReport;
 import com.czertainly.cryptosense.certificate.discovery.dto.AnalyzerRequestDto;
+import com.czertainly.cryptosense.certificate.discovery.service.AnalyzerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

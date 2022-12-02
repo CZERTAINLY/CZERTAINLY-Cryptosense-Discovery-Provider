@@ -2,11 +2,11 @@ package com.czertainly.cryptosense.certificate.discovery.service.impl;
 
 import com.czertainly.api.exception.NotFoundException;
 import com.czertainly.api.model.common.attribute.v2.AttributeType;
-import com.czertainly.api.model.common.attribute.v2.InfoAttribute;
-import com.czertainly.api.model.common.attribute.v2.InfoAttributeProperties;
+import com.czertainly.api.model.common.attribute.v2.MetadataAttribute;
 import com.czertainly.api.model.common.attribute.v2.content.AttributeContentType;
 import com.czertainly.api.model.common.attribute.v2.content.IntegerAttributeContent;
 import com.czertainly.api.model.common.attribute.v2.content.StringAttributeContent;
+import com.czertainly.api.model.common.attribute.v2.properties.MetadataAttributeProperties;
 import com.czertainly.api.model.connector.discovery.DiscoveryDataRequestDto;
 import com.czertainly.api.model.connector.discovery.DiscoveryProviderDto;
 import com.czertainly.api.model.connector.discovery.DiscoveryRequestDto;
@@ -18,11 +18,11 @@ import com.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerProj
 import com.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerReport;
 import com.czertainly.cryptosense.certificate.discovery.dao.Certificate;
 import com.czertainly.cryptosense.certificate.discovery.dao.DiscoveryHistory;
+import com.czertainly.cryptosense.certificate.discovery.dto.AnalyzerRequestDto;
 import com.czertainly.cryptosense.certificate.discovery.repository.CertificateRepository;
 import com.czertainly.cryptosense.certificate.discovery.service.AnalyzerService;
 import com.czertainly.cryptosense.certificate.discovery.service.DiscoveryHistoryService;
 import com.czertainly.cryptosense.certificate.discovery.service.DiscoveryService;
-import com.czertainly.cryptosense.certificate.discovery.dto.AnalyzerRequestDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +74,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
         dto.setUuid(history.getUuid());
         dto.setName(history.getName());
         dto.setStatus(history.getStatus());
-        dto.setMeta(AttributeDefinitionUtils.deserialize(history.getMeta(), InfoAttribute.class));
+        dto.setMeta(AttributeDefinitionUtils.deserialize(history.getMeta(), MetadataAttribute.class));
         int totalCertificateSize = certificateRepository.findByDiscoveryId(history.getId()).size();
         dto.setTotalCertificatesDiscovered(totalCertificateSize);
         if (history.getStatus() == DiscoveryStatus.IN_PROGRESS) {
@@ -134,7 +134,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
                             } catch (Exception e) {
                                 logger.error("Failed to discover Certificates: {}", e.getMessage());
                                 history.setStatus(DiscoveryStatus.FAILED);
-                                List<InfoAttribute> meta = getReasonMeta(e.getMessage());
+                                List<MetadataAttribute> meta = getReasonMeta(e.getMessage());
                                 history.setMeta(AttributeDefinitionUtils.serialize(meta));
                                 discoveryHistoryService.setHistory(history);
                                 return;
@@ -169,7 +169,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
                     } catch (Exception e) {
                         logger.error("Failed to discover Certificates: {}", e.getMessage());
                         history.setStatus(DiscoveryStatus.FAILED);
-                        List<InfoAttribute> meta = getReasonMeta(e.getMessage());
+                        List<MetadataAttribute> meta = getReasonMeta(e.getMessage());
                         history.setMeta(AttributeDefinitionUtils.serialize(meta));
                         discoveryHistoryService.setHistory(history);
                         return;
@@ -196,7 +196,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
             } catch (Exception e) {
                 logger.error("Failed to discover Certificates: {}", e.getMessage());
                 history.setStatus(DiscoveryStatus.FAILED);
-                List<InfoAttribute> meta = getReasonMeta(e.getMessage());
+                List<MetadataAttribute> meta = getReasonMeta(e.getMessage());
                 history.setMeta(AttributeDefinitionUtils.serialize(meta));
                 discoveryHistoryService.setHistory(history);
                 return;
@@ -221,18 +221,18 @@ public class DiscoveryServiceImpl implements DiscoveryService {
         logger.info("Discovery Completed. Name of the discovery is {}", request.getName());
     }
 
-    private List<InfoAttribute> getDiscoveryMeta(Integer totalCertificates, Integer incompleteCertificate) {
-        List<InfoAttribute> attributes = new ArrayList<>();
+    private List<MetadataAttribute> getDiscoveryMeta(Integer totalCertificates, Integer incompleteCertificate) {
+        List<MetadataAttribute> attributes = new ArrayList<>();
 
         //Total Certificates
-        InfoAttribute attribute = new InfoAttribute();
+        MetadataAttribute attribute = new MetadataAttribute();
         attribute.setName("totalCertificates");
         attribute.setUuid("d3d8bdf8-60ed-11ed-9b6a-0242ac120002");
         attribute.setContentType(AttributeContentType.INTEGER);
         attribute.setType(AttributeType.META);
         attribute.setDescription("Total Number of Certificates Discovered");
 
-        InfoAttributeProperties attributeProperties = new InfoAttributeProperties();
+        MetadataAttributeProperties attributeProperties = new MetadataAttributeProperties();
         attributeProperties.setLabel("Total Certificates Discovered");
         attributeProperties.setVisible(true);
 
@@ -241,14 +241,14 @@ public class DiscoveryServiceImpl implements DiscoveryService {
         attributes.add(attribute);
 
         //Incomplete Certificates
-        InfoAttribute inCompleteAttribute = new InfoAttribute();
+        MetadataAttribute inCompleteAttribute = new MetadataAttribute();
         inCompleteAttribute.setName("incompleteCertificates");
         inCompleteAttribute.setUuid("d3d8c136-60ed-11ed-9b6a-0242ac120002");
         inCompleteAttribute.setContentType(AttributeContentType.INTEGER);
         inCompleteAttribute.setType(AttributeType.META);
         inCompleteAttribute.setDescription("Incomplete Certificates");
 
-        InfoAttributeProperties inCompleteAttributeProperties = new InfoAttributeProperties();
+        MetadataAttributeProperties inCompleteAttributeProperties = new MetadataAttributeProperties();
         inCompleteAttributeProperties.setLabel("Incomplete Certificates");
         inCompleteAttributeProperties.setVisible(true);
 
@@ -259,18 +259,18 @@ public class DiscoveryServiceImpl implements DiscoveryService {
         return attributes;
     }
 
-    private List<InfoAttribute> getReasonMeta(String exception) {
-        List<InfoAttribute> attributes = new ArrayList<>();
+    private List<MetadataAttribute> getReasonMeta(String exception) {
+        List<MetadataAttribute> attributes = new ArrayList<>();
 
         //Exception Reason
-        InfoAttribute attribute = new InfoAttribute();
+        MetadataAttribute attribute = new MetadataAttribute();
         attribute.setName("reason");
         attribute.setUuid("4dcdd7fc-60ed-11ed-9b6a-0242ac120002");
         attribute.setContentType(AttributeContentType.STRING);
         attribute.setType(AttributeType.META);
         attribute.setDescription("Reason for failure");
 
-        InfoAttributeProperties attributeProperties = new InfoAttributeProperties();
+        MetadataAttributeProperties attributeProperties = new MetadataAttributeProperties();
         attributeProperties.setLabel("Reason");
         attributeProperties.setVisible(true);
 
@@ -330,18 +330,18 @@ public class DiscoveryServiceImpl implements DiscoveryService {
         }
     }
 
-    private List<InfoAttribute> getCertificateMeta(String url, String projectName, String projectId, String reportName, String reportId, String certId) {
-        List<InfoAttribute> attributes = new ArrayList<>();
+    private List<MetadataAttribute> getCertificateMeta(String url, String projectName, String projectId, String reportName, String reportId, String certId) {
+        List<MetadataAttribute> attributes = new ArrayList<>();
 
         //Analyzer URL
-        InfoAttribute attribute = new InfoAttribute();
+        MetadataAttribute attribute = new MetadataAttribute();
         attribute.setName("analyzerUrl");
         attribute.setUuid("88b104ec-60ee-11ed-9b6a-0242ac120002");
         attribute.setContentType(AttributeContentType.INTEGER);
         attribute.setType(AttributeType.META);
         attribute.setDescription("Analyzer URL from where the certificate is discovered");
 
-        InfoAttributeProperties attributeProperties = new InfoAttributeProperties();
+        MetadataAttributeProperties attributeProperties = new MetadataAttributeProperties();
         attributeProperties.setLabel("Analyzer URL");
         attributeProperties.setVisible(true);
 
@@ -350,14 +350,14 @@ public class DiscoveryServiceImpl implements DiscoveryService {
         attributes.add(attribute);
 
         //Project Name
-        InfoAttribute projectNameAttribute = new InfoAttribute();
+        MetadataAttribute projectNameAttribute = new MetadataAttribute();
         projectNameAttribute.setName("analyzerProjectName");
         projectNameAttribute.setUuid("88b107d0-60ee-11ed-9b6a-0242ac120002");
         projectNameAttribute.setContentType(AttributeContentType.INTEGER);
         projectNameAttribute.setType(AttributeType.META);
         projectNameAttribute.setDescription("Project Name from where the certificate is discovered");
 
-        InfoAttributeProperties projectNameProperties = new InfoAttributeProperties();
+        MetadataAttributeProperties projectNameProperties = new MetadataAttributeProperties();
         projectNameProperties.setLabel("Project Name");
         projectNameProperties.setVisible(true);
 
@@ -366,14 +366,14 @@ public class DiscoveryServiceImpl implements DiscoveryService {
         attributes.add(projectNameAttribute);
 
         //Project ID
-        InfoAttribute projectIdAttribute = new InfoAttribute();
+        MetadataAttribute projectIdAttribute = new MetadataAttribute();
         projectIdAttribute.setName("analyzerProjectId");
         projectIdAttribute.setUuid("88b109ce-60ee-11ed-9b6a-0242ac120002");
         projectIdAttribute.setContentType(AttributeContentType.STRING);
         projectIdAttribute.setType(AttributeType.META);
         projectIdAttribute.setDescription("Project ID from where the certificate is discovered");
 
-        InfoAttributeProperties projectIdAttributeProperties = new InfoAttributeProperties();
+        MetadataAttributeProperties projectIdAttributeProperties = new MetadataAttributeProperties();
         projectIdAttributeProperties.setLabel("Analyzer URL");
         projectIdAttributeProperties.setVisible(true);
 
@@ -382,14 +382,14 @@ public class DiscoveryServiceImpl implements DiscoveryService {
         attributes.add(projectIdAttribute);
 
         //Report Name
-        InfoAttribute reportNameAttribute = new InfoAttribute();
+        MetadataAttribute reportNameAttribute = new MetadataAttribute();
         reportNameAttribute.setName("analyzerReportName");
         reportNameAttribute.setUuid("88b10b2c-60ee-11ed-9b6a-0242ac120002");
         reportNameAttribute.setContentType(AttributeContentType.STRING);
         reportNameAttribute.setType(AttributeType.META);
         reportNameAttribute.setDescription("Report Name from where the certificate is discovered");
 
-        InfoAttributeProperties reportNameAttributeProperties = new InfoAttributeProperties();
+        MetadataAttributeProperties reportNameAttributeProperties = new MetadataAttributeProperties();
         reportNameAttributeProperties.setLabel("Report Name");
         reportNameAttributeProperties.setVisible(true);
 
@@ -398,14 +398,14 @@ public class DiscoveryServiceImpl implements DiscoveryService {
         attributes.add(reportNameAttribute);
 
         //Report ID
-        InfoAttribute reportIdAttribute = new InfoAttribute();
+        MetadataAttribute reportIdAttribute = new MetadataAttribute();
         reportIdAttribute.setName("analyzerReportId");
         reportIdAttribute.setUuid("88b1102c-60ee-11ed-9b6a-0242ac120002");
         reportIdAttribute.setContentType(AttributeContentType.STRING);
         reportIdAttribute.setType(AttributeType.META);
         reportIdAttribute.setDescription("Report ID from where the certificate is discovered");
 
-        InfoAttributeProperties reportIdAttributeProperties = new InfoAttributeProperties();
+        MetadataAttributeProperties reportIdAttributeProperties = new MetadataAttributeProperties();
         reportIdAttributeProperties.setLabel("Report ID");
         reportIdAttributeProperties.setVisible(true);
 
@@ -414,14 +414,14 @@ public class DiscoveryServiceImpl implements DiscoveryService {
         attributes.add(reportIdAttribute);
 
         //Certificate ID
-        InfoAttribute certificateIdAttribute = new InfoAttribute();
+        MetadataAttribute certificateIdAttribute = new MetadataAttribute();
         certificateIdAttribute.setName("analyzerCertificateId");
         certificateIdAttribute.setUuid("88b1128e-60ee-11ed-9b6a-0242ac120002");
         certificateIdAttribute.setContentType(AttributeContentType.STRING);
         certificateIdAttribute.setType(AttributeType.META);
         certificateIdAttribute.setDescription("Certificate ID from where the certificate is discovered");
 
-        InfoAttributeProperties certificateIdAttributeProperties = new InfoAttributeProperties();
+        MetadataAttributeProperties certificateIdAttributeProperties = new MetadataAttributeProperties();
         certificateIdAttributeProperties.setLabel("Certificate ID");
         certificateIdAttributeProperties.setVisible(true);
 
@@ -430,14 +430,14 @@ public class DiscoveryServiceImpl implements DiscoveryService {
         attributes.add(certificateIdAttribute);
 
         //Source
-        InfoAttribute sourceAttribute = new InfoAttribute();
+        MetadataAttribute sourceAttribute = new MetadataAttribute();
         sourceAttribute.setName("discoverySource");
         sourceAttribute.setUuid("0ee5fc56-60f0-11ed-9b6a-0242ac120002");
         sourceAttribute.setContentType(AttributeContentType.STRING);
         sourceAttribute.setType(AttributeType.META);
         sourceAttribute.setDescription("Discovery Source from where the certificate is discovered");
 
-        InfoAttributeProperties sourceAttributeProperties = new InfoAttributeProperties();
+        MetadataAttributeProperties sourceAttributeProperties = new MetadataAttributeProperties();
         sourceAttributeProperties.setLabel("Discovery Source");
         sourceAttributeProperties.setVisible(true);
 

@@ -1,7 +1,6 @@
 package com.czertainly.cryptosense.certificate.discovery.service.impl;
 
 import com.czertainly.api.model.client.attribute.RequestAttributeDto;
-import com.czertainly.api.model.common.attribute.v2.DataAttributeProperties;
 import com.czertainly.api.model.common.attribute.v2.AttributeType;
 import com.czertainly.api.model.common.attribute.v2.BaseAttribute;
 import com.czertainly.api.model.common.attribute.v2.DataAttribute;
@@ -12,6 +11,7 @@ import com.czertainly.api.model.common.attribute.v2.constraint.AttributeConstrai
 import com.czertainly.api.model.common.attribute.v2.constraint.RegexpAttributeConstraint;
 import com.czertainly.api.model.common.attribute.v2.content.AttributeContentType;
 import com.czertainly.api.model.common.attribute.v2.content.StringAttributeContent;
+import com.czertainly.api.model.common.attribute.v2.properties.DataAttributeProperties;
 import com.czertainly.core.util.AttributeDefinitionUtils;
 import com.czertainly.cryptosense.certificate.discovery.service.AttributeService;
 import org.slf4j.Logger;

@@ -6,11 +6,11 @@ import com.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerCert
 import com.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerProject;
 import com.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerReport;
 import com.czertainly.cryptosense.certificate.discovery.cryptosense.GraphqlRequestBody;
-import com.czertainly.cryptosense.certificate.discovery.service.AnalyzerService;
-import com.czertainly.cryptosense.certificate.discovery.util.GraphqlSchemaReaderUtil;
 import com.czertainly.cryptosense.certificate.discovery.dto.AnalyzerDto;
 import com.czertainly.cryptosense.certificate.discovery.dto.AnalyzerEdgesDto;
 import com.czertainly.cryptosense.certificate.discovery.dto.AnalyzerRequestDto;
+import com.czertainly.cryptosense.certificate.discovery.service.AnalyzerService;
+import com.czertainly.cryptosense.certificate.discovery.util.GraphqlSchemaReaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
