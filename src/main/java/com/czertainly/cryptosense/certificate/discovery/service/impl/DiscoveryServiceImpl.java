@@ -6,6 +6,7 @@ import com.czertainly.api.model.common.attribute.v2.MetadataAttribute;
 import com.czertainly.api.model.common.attribute.v2.content.AttributeContentType;
 import com.czertainly.api.model.common.attribute.v2.content.IntegerAttributeContent;
 import com.czertainly.api.model.common.attribute.v2.content.StringAttributeContent;
+import com.czertainly.api.model.common.attribute.v2.content.data.CredentialAttributeContentData;
 import com.czertainly.api.model.common.attribute.v2.properties.MetadataAttributeProperties;
 import com.czertainly.api.model.connector.discovery.DiscoveryDataRequestDto;
 import com.czertainly.api.model.connector.discovery.DiscoveryProviderDto;
@@ -109,7 +110,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
     private void discoverCertificateInternal(DiscoveryRequestDto request, DiscoveryHistory history) throws NullPointerException {
         logger.info("Discovery initiated for the request with name {}", request.getName());
         String apiUrl = AttributeDefinitionUtils.getSingleItemAttributeContentValue(AttributeServiceImpl.ATTRIBUTE_API_URL, request.getAttributes(), StringAttributeContent.class).getData();
-        CredentialDto apiKeyCredential = AttributeDefinitionUtils.getCredentialContent("apiKey", request.getAttributes());
+        CredentialAttributeContentData apiKeyCredential = AttributeDefinitionUtils.getCredentialContent("apiKey", request.getAttributes());
         final AnalyzerProject selectedProject = AttributeDefinitionUtils.getObjectAttributeContentData(AttributeServiceImpl.ATTRIBUTE_PROJECT, request.getAttributes(), AnalyzerProject.class).get(0);
         final AnalyzerReport selectedReport = AttributeDefinitionUtils.getObjectAttributeContentData(AttributeServiceImpl.ATTRIBUTE_REPORT, request.getAttributes(), AnalyzerReport.class).get(0);
         AnalyzerRequestDto analyzerRequestDto = new AnalyzerRequestDto();
