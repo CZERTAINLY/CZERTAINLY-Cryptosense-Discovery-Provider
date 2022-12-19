@@ -1,7 +1,9 @@
 package com.czertainly.cryptosense.certificate.discovery.service;
 
 import com.czertainly.api.model.client.attribute.ResponseAttributeDto;
+import com.czertainly.api.model.common.attribute.v2.DataAttribute;
 import com.czertainly.api.model.common.attribute.v2.content.StringAttributeContent;
+import com.czertainly.api.model.common.attribute.v2.content.data.CredentialAttributeContentData;
 import com.czertainly.api.model.core.credential.CredentialDto;
 import com.czertainly.cryptosense.certificate.discovery.dto.AnalyzerRequestDto;
 import com.github.tomakehurst.wiremock.WireMockServer;
@@ -27,7 +29,7 @@ public class AnalyzerTest {
 
     private WireMockServer mockServer;
 
-    private CredentialDto credDto;
+    private CredentialAttributeContentData credDto;
 
     @BeforeEach
     public void setUp() {
@@ -36,13 +38,11 @@ public class AnalyzerTest {
 
         WireMock.configureFor("localhost", mockServer.port());
 
-        credDto = new CredentialDto();
+        credDto = new CredentialAttributeContentData();
         credDto.setUuid("57fd083e-92c5-411c-964c-5b4e7fe35205");
         credDto.setName("test");
-        credDto.setEnabled(true);
-        credDto.setConnectorName("Test Connector");
 
-        ResponseAttributeDto apiKey = new ResponseAttributeDto();
+        DataAttribute apiKey = new DataAttribute();
         apiKey.setUuid("aac5c2d5-5dc3-4ddb-9dfa-3d76b99135f8");
         apiKey.setName("apiKey");
         apiKey.setContent(List.of(new StringAttributeContent("asdfEDssdfhcHJSHxhFxf")));
