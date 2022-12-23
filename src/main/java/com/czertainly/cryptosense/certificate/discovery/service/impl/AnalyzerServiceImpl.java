@@ -1,6 +1,9 @@
 package com.czertainly.cryptosense.certificate.discovery.service.impl;
 
+import com.czertainly.api.exception.ValidationError;
+import com.czertainly.api.exception.ValidationException;
 import com.czertainly.api.model.common.attribute.v2.content.SecretAttributeContent;
+import com.czertainly.api.model.common.attribute.v2.content.data.CredentialAttributeContentData;
 import com.czertainly.core.util.AttributeDefinitionUtils;
 import com.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerCertificate;
 import com.czertainly.cryptosense.certificate.discovery.cryptosense.AnalyzerProject;
@@ -46,7 +49,7 @@ public class AnalyzerServiceImpl implements AnalyzerService {
         graphQLRequestBody.setQuery(query);
         //graphQLRequestBody.setVariables(variables.replace("countryCode", countryCode));
         //CredentialDto apiKey = AttributeDefinitionUtils.getCredentialValue("apiKey", request.getApiKey().getAttributes());
-        String apiKey = AttributeDefinitionUtils.getSingleItemAttributeContentValue("apiKey", request.getCredentialKind().getAttributes(), SecretAttributeContent.class).getData().getSecret();
+        String apiKey = getApiKey(request.getCredentialKind());
         AnalyzerDto response = webClient.post()
                 .uri(request.getApiUrl())
                 .header("API-KEY", apiKey)
@@ -113,7 +116,7 @@ public class AnalyzerServiceImpl implements AnalyzerService {
                 graphQLRequestBody.setVariables(variables.replace("projectId", projectId));
             }
 
-            String apiKey = AttributeDefinitionUtils.getSingleItemAttributeContentValue("apiKey", request.getCredentialKind().getAttributes(), SecretAttributeContent.class).getData().getSecret();
+            String apiKey = getApiKey(request.getCredentialKind());
 
             AnalyzerDto response = webClient.post()
                     .uri(request.getApiUrl())
@@ -172,7 +175,7 @@ public class AnalyzerServiceImpl implements AnalyzerService {
             graphQLRequestBody.setVariables(variables.replace("reportId", reportId));
         }
 
-        String apiKey = AttributeDefinitionUtils.getSingleItemAttributeContentValue("apiKey", request.getCredentialKind().getAttributes(), SecretAttributeContent.class).getData().getSecret();
+        String apiKey = getApiKey(request.getCredentialKind());
 
         AnalyzerDto response = webClient.post()
                 .uri(request.getApiUrl())
@@ -201,5 +204,12 @@ public class AnalyzerServiceImpl implements AnalyzerService {
         }
 
         return listOfCertificates;
+    }
+
+    private String getApiKey(CredentialAttributeContentData credentialKind) {
+        if(credentialKind == null) {
+            throw new ValidationException(ValidationError.create("Empty Credentials"));
+        }
+        return AttributeDefinitionUtils.getSingleItemAttributeContentValue("apiKey", credentialKind.getAttributes(), SecretAttributeContent.class).getData().getSecret();
     }
 }
