@@ -12,7 +12,7 @@ public class HealthControllerImpl implements HealthController {
     public HealthDto checkHealth() {
         HealthDto health = new HealthDto();
         health.setStatus(HealthStatus.OK);
-        health.setDescription("Everything seems to be working...");
+        health.setDescription("Connector is online and ready to serve request");
         return health;
     }
 }

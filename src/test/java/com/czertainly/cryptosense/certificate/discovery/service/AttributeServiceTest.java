@@ -20,7 +20,7 @@ public class AttributeServiceTest {
     private List<RequestAttributeDto> attributes;
 
     @BeforeEach
-    private void setup() {
+    protected void setup() {
         RequestAttributeDto apiUrl = new RequestAttributeDto();
         apiUrl.setUuid("1b6c48ad-c1c7-4c82-91ef-3e61bc9f52ac");
         apiUrl.setContent(List.of(new StringAttributeContent("https://analyzer.cryptosense.com/api/v2")));
