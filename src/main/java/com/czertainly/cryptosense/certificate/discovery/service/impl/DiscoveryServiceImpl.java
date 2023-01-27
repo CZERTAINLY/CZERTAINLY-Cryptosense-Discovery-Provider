@@ -23,6 +23,7 @@ import com.czertainly.cryptosense.certificate.discovery.repository.CertificateRe
 import com.czertainly.cryptosense.certificate.discovery.service.AnalyzerService;
 import com.czertainly.cryptosense.certificate.discovery.service.DiscoveryHistoryService;
 import com.czertainly.cryptosense.certificate.discovery.service.DiscoveryService;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +32,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
