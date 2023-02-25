@@ -19,6 +19,8 @@ RUN addgroup --system --gid 10001 czertainly && adduser --system --home /opt/cze
 COPY --from=build /home/app/docker /
 COPY --from=build /home/app/target/*.jar /opt/czertainly/app.jar
 
+WORKDIR /opt/czertainly
+
 ENV PORT=8080
 ENV DB_SCHEMA=cryptosense
 ENV JDBC_URL=
