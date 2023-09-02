@@ -37,8 +37,8 @@ public class DiscoveryServiceTest {
 
         discoveryProviderDtoTestExists = new DiscoveryDataRequestDto();
         discoveryProviderDtoTestExists.setName("test123");
-        discoveryProviderDtoTestExists.setStartIndex(0);
-        discoveryProviderDtoTestExists.setEndIndex(100);
+        discoveryProviderDtoTestExists.setPageNumber(0);
+        discoveryProviderDtoTestExists.setItemsPerPage(100);
 
 
         RequestAttributeDto apiUrl = new RequestAttributeDto();
