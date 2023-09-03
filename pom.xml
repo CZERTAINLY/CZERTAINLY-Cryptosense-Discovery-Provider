@@ -12,7 +12,7 @@
 
 	<groupId>org.czertainly</groupId>
 	<artifactId>cryptosense-discovery</artifactId>
-	<version>1.4.0</version>
+	<version>1.4.1-SNAPSHOT</version>
 	<name>CZERTAINLY-Cryptosense-Discovery-Provider</name>
 	<description>Certificate Discovery Connector for CZERTAINLY based on Cryptosense Analyzer results</description>
 
