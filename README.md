@@ -1,7 +1,7 @@
 # CZERTAINLY Cryptosense Discovery Provider
 
 > This repository is part of the commercial open-source project CZERTAINLY.
-> You can find more information about the project at [CZERTAINLY](https://github.com/3KeyCompany/CZERTAINLY) repository, including the contribution guide.
+> You can find more information about the project at [CZERTAINLY](https://github.com/CZERTAINLY/CZERTAINLY) repository, including the contribution guide.
 
 ## Cryptosense
 
@@ -26,17 +26,17 @@ The `Connector` provides options to search for certificates in various projects 
 
 Once certificates are discovered they are parsed and stored within the certificate inventory managed by the `Core`.
 
-To know more about `Core`, refer to [CZERTAINLY Core](https://github.com/3KeyCompany/CZERTAINLY-Core).
+To know more about `Core`, refer to [CZERTAINLY Core](https://github.com/CZERTAINLY/CZERTAINLY-Core).
 
 ## Interfaces
 
-`Cryptosense` `Discovery Provider` implements the `Discovery Provider` Interface from the CZERTAINLY Interfaces. To learn more about the interfaces and end points, refer to the [CZERTAINLY Interfaces](https://github.com/3KeyCompany/CZERTAINLY-Interfaces).
+`Cryptosense` `Discovery Provider` implements the `Discovery Provider` Interface from the CZERTAINLY Interfaces. To learn more about the interfaces and end points, refer to the [CZERTAINLY Interfaces](https://github.com/CZERTAINLY/CZERTAINLY-Interfaces).
 
 For more information regarding the `Discovery`, please refer to the [CZERTAINLY documentation](https://docs.czertainly.com).
 
 ## Docker container
 
-`Cryptosense` `Discovery Provider` is provided as a Docker container. Use the `harbor.3key.company/czertainly/czertainly-cryptosense-discovery-provider:tagname` to pull the required image from the repository. It can be configured using the following environment variables:
+`Cryptosense` `Discovery Provider` is provided as a Docker container. Use the `docker.io/czertainly/czertainly-cryptosense-discovery-provider:tagname` to pull the required image from the repository. It can be configured using the following environment variables:
 
 | Variable        | Description                                              | Required                                           | Default value |
 |-----------------|----------------------------------------------------------|----------------------------------------------------|---------------|
