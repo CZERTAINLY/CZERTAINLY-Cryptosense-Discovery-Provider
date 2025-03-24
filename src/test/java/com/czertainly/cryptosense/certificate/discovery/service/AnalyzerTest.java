@@ -31,7 +31,7 @@ public class AnalyzerTest {
 
     @BeforeEach
     public void setUp() {
-        mockServer = new WireMockServer(3665);
+        mockServer = new WireMockServer(0);
         mockServer.start();
 
         WireMock.configureFor("localhost", mockServer.port());
